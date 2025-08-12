@@ -17,6 +17,40 @@
 		"back": "Back",
 
 		"light": "Light",
-		"dark": "Dark"
+		"dark": "Dark",
+		"title": {
+			"1": "Heading 1",
+			"2": "Heading 2",
+			"3": "Heading 3",
+			"4": "Heading 4",
+			"5": "Heading 5",
+			"6": "Heading 6"
+		},
+		"normal": "Normal",
+		"bold": "Bold",
+		"italic": "Italic",
+		"underline": "Underline",
+		"strike": "Strike",
+		"code": "Code",
+		"link": "Link",
+		"image": "Image",
+		"video": "Video",
+		"audio": "Audio",
+		"table": "Table",
+		"list": "List",
+		"quote": "Quote",
+		"clean": "Clean",
+		"indent": "Indent",
+		"outdent": "Outdent",
+		"color": "Color",
+		"background": "Background",
+		"font": "Font",
+		"orderedList": "Ordered List",
+		"bulletList": "Bullet List",
+		"super": "Super Script",
+		"sub": "Sub Script",
+		"direction": "Direction",
+		"align": "Align",
+		"formula": "Formula"
 	}
 }

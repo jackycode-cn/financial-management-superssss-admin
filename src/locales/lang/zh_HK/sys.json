@@ -1,0 +1,172 @@
+{
+	"sys": {
+		"api": {
+			"operationSuccess": "操作成功",
+			"operationFailed": "操作失敗",
+			"errorTip": "錯誤提示",
+			"successTip": "成功提示",
+			"errorMessage": "操作失敗，系統異常！",
+			"timeoutMessage": "登入逾時，請重新登入！",
+			"apiTimeoutMessage": "介面請求逾時，請刷新頁面重試！",
+			"apiRequestFailed": "請求出錯，請稍後重試",
+			"networkException": "網絡異常",
+			"networkExceptionMsg": "網絡異常，請檢查您的網絡連線是否正常！",
+
+			"errMsg401": "用戶沒有權限（令牌、用戶名、密碼錯誤）！",
+			"errMsg403": "用戶獲得授權，但訪問被禁止！",
+			"errMsg404": "網絡請求錯誤，未找到該資源！",
+			"errMsg405": "網絡請求錯誤，請求方法不被允許！",
+			"errMsg408": "網絡請求逾時！",
+			"errMsg500": "伺服器錯誤，請聯絡管理員！",
+			"errMsg501": "網絡未實現！",
+			"errMsg502": "網絡錯誤！",
+			"errMsg503": "服務不可用，伺服器暫時過載或維護中！",
+			"errMsg504": "網絡逾時！",
+			"errMsg505": "HTTP 版本不支持該請求！"
+		},
+		"login": {
+			"backSignIn": "返回",
+			"signInFormTitle": "登入您的帳戶",
+			"mobileSignInFormTitle": "手機登入",
+			"qrSignInFormTitle": "二維碼登入",
+			"signUpFormTitle": "註冊",
+			"forgetFormTitle": "重設密碼",
+
+			"signInPrimaryTitle": "歡迎回來",
+			"signInSecondTitle": "開箱即用的中台管理系統",
+			"signInDesc": "輸入您的個人資料開始使用！",
+			"policy": "我同意 xxx 私隱政策",
+			"scanSign": "掃描後點擊「確認」即可完成登入",
+			"forgetFormSecondTitle": "請輸入與您的帳戶相關聯的電郵地址，我們會發送重設密碼的連結給您。",
+
+			"loginButton": "登入",
+			"registerButton": "註冊",
+			"rememberMe": "記住我",
+			"forgetPassword": "忘記密碼？",
+			"otherSignIn": "其他登入方式",
+			"sendSmsButton": "發送驗證碼",
+			"sendSmsText": "{{second}} 秒後重試",
+			"sendEmailButton": "發送電郵",
+
+			"loginSuccessTitle": "登入成功",
+			"loginSuccessDesc": "歡迎回來",
+
+			"accountPlaceholder": "請輸入帳號",
+			"passwordPlaceholder": "請輸入密碼",
+			"confirmPasswordPlaceholder": "請輸入確認密碼",
+			"emaildPlaceholder": "請輸入電郵",
+			"smsPlaceholder": "請輸入驗證碼",
+			"mobilePlaceholder": "請輸入手機號碼",
+			"policyPlaceholder": "勾選後才能註冊",
+			"diffPwd": "兩次輸入密碼不一致",
+			"signInTitle": "登入",
+			"userName": "帳號",
+			"password": "密碼",
+			"confirmPassword": "確認密碼",
+			"email": "電郵",
+			"smsCode": "短信驗證碼",
+			"mobile": "手機號碼",
+
+			"registerAndAgree": "註冊即表示我同意",
+			"termsOfService": " 服務條款 ",
+			"privacyPolicy": " 私隱政策 ",
+			"logout": "登出",
+			"signInFormDescription": "輸入您的帳號登入您的帳戶",
+			"noAccount": "沒有帳戶？"
+		},
+		"tab": {
+			"fullscreen": "內容全螢幕",
+			"refresh": "重新整理",
+			"close": "關閉分頁",
+			"closeOthers": "關閉其他分頁",
+			"closeAll": "關閉所有分頁",
+			"closeLeft": "關閉左側分頁",
+			"closeRight": "關閉右側分頁"
+		},
+		"nav": {
+			"dashboard": "儀表板",
+			"pages": "頁面",
+			"others": "其他",
+			"ui": "介面",
+			"custom_ui_components": "自訂介面元件",
+			"workbench": "工作台",
+			"analysis": "分析",
+			"management": "管理",
+			"user": {
+				"index": "用戶",
+				"profile": "個人資料",
+				"account": "帳戶"
+			},
+			"system": {
+				"index": "系統",
+				"organization": "組織",
+				"permission": "權限",
+				"role": "角色",
+				"user": "用戶",
+				"user_detail": "用戶詳情"
+			},
+			"blog": "博客",
+			"components": "元件",
+			"icon": "圖示",
+			"animate": "動畫",
+			"scroll": "滾動",
+			"markdown": "Markdown",
+			"editor": "富文本",
+			"i18n": "多語言",
+			"upload": "上傳",
+			"chart": "圖表",
+			"toast": "通知",
+			"functions": "功能",
+			"clipboard": "剪貼簿",
+			"token_expired": "令牌失效",
+			"menulevel": {
+				"index": "多級選單",
+				"1a": "多級選單 1a",
+				"1b": {
+					"index": "多級選單 1b",
+					"2a": "多級選單 2a",
+					"2b": {
+						"index": "多級選單 2b",
+						"3a": "多級選單 3a",
+						"3b": "多級選單 3b"
+					}
+				}
+			},
+			"disabled": "項目已停用",
+			"label": "項目標籤",
+			"link": "連結",
+			"external_link": "外部連結",
+			"iframe": "內嵌框架",
+			"blank": "空白",
+			"calendar": "日曆",
+			"kanban": "看板",
+			"permission": "權限",
+			"permission.page_test": "頁面權限測試",
+			"error": {
+				"index": "異常頁面",
+				"403": "403",
+				"404": "404",
+				"500": "500"
+			}
+		},
+		"docs": "文件",
+		"settings": {
+			"title": "設定",
+			"mode": "模式",
+			"layout": "佈局",
+			"stretch": "拉伸",
+			"stretchTip": "只於屏幕寬度大於 1280px (xl) 時可用",
+			"presetThemes": "預設主題",
+			"font": "字體",
+			"family": "字體系列",
+			"size": "字體大小",
+			"page": "頁面",
+			"breadcrumb": "麵包屑",
+			"multiTab": "多標籤",
+			"darkSidebar": "暗色側邊欄",
+			"accordion": "手風琴選單",
+			"fullscreen": "全螢幕",
+			"exitFullscreen": "退出全螢幕"
+		}
+	}
+}

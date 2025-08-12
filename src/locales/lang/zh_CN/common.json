@@ -17,6 +17,40 @@
 		"back": "返回",
 
 		"light": "亮色主题",
-		"dark": "黑暗主题"
+		"dark": "黑暗主题",
+		"title": {
+			"1": "一级标题",
+			"2": "二级标题",
+			"3": "三级标题",
+			"4": "四级标题",
+			"5": "五级标题",
+			"6": "六级标题"
+		},
+		"normal": "正常",
+		"bold": "加粗",
+		"italic": "斜体",
+		"underline": "下划线",
+		"strike": "删除线",
+		"code": "代码",
+		"link": "链接",
+		"image": "图片",
+		"video": "视频",
+		"audio": "音频",
+		"table": "表格",
+		"list": "列表",
+		"quote": "引用",
+		"clean": "清除格式",
+		"indent": "缩进",
+		"outdent": "縮退",
+		"color": "颜色",
+		"background": "背景",
+		"font": "字体",
+		"orderedList": "有序列表",
+		"bulletList": "无序列表",
+		"super": "上标",
+		"sub": "下标",
+		"direction": "方向",
+		"align": "对齐",
+		"formula": "公式"
 	}
 }

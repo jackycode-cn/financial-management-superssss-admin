@@ -102,4 +102,11 @@ export const frontendDashboardRoutes: RouteObject[] = [
 	{ path: "calendar", element: Component("/pages/sys/others/calendar") },
 	{ path: "kanban", element: Component("/pages/sys/others/kanban") },
 	{ path: "blank", element: Component("/pages/sys/others/blank") },
+	{
+		path: "articles",
+		children: [
+			{ index: true, element: <Navigate to="create" replace /> },
+			{ path: "create", element: Component("/pages/articles/create-article") },
+		],
+	},
 ];

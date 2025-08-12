@@ -157,6 +157,10 @@ export const frontendNavData: NavProps["data"] = [
 						title: "sys.nav.toast",
 						path: "/components/toast",
 					},
+					{
+						title: "sys.nav.editor",
+						path: "/components/editor",
+					},
 				],
 			},
 			// functions
@@ -239,6 +243,11 @@ export const frontendNavData: NavProps["data"] = [
 				title: "sys.nav.blank",
 				path: "/blank",
 				icon: <Icon icon="local:ic-blank" size="24" />,
+			},
+			{
+				title: "dashboard.nav.article",
+				path: "/articles",
+				icon: <Icon icon="stash:article" size="24" />,
 			},
 		],
 	},

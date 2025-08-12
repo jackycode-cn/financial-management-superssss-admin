@@ -1,0 +1,56 @@
+{
+	"common": {
+		"okText": "確認",
+		"closeText": "關閉",
+		"cancelText": "取消",
+		"loadingText": "加載中...",
+		"saveText": "保存",
+		"delText": "刪除",
+		"resetText": "重置",
+		"searchText": "搜索",
+		"queryText": "查詢",
+
+		"inputText": "請輸入",
+		"chooseText": "請選擇",
+
+		"redo": "刷新",
+		"back": "返回",
+
+		"light": "亮色主題",
+		"dark": "黑暗主題",
+		"title": {
+			"1": "一级標題",
+			"2": "二级標題",
+			"3": "三级標題",
+			"4": "四级標題",
+			"5": "五级標題",
+			"6": "六级標題"
+		},
+		"normal": "正常",
+		"bold": "加粗",
+		"italic": "斜體",
+		"underline": "下劃線",
+		"strike": "刪除線",
+		"code": "代碼",
+		"link": "連結",
+		"image": "圖片",
+		"video": "視頻",
+		"audio": "音頻",
+		"table": "表格",
+		"list": "列表",
+		"quote": "引用",
+		"clean": "清除格式",
+		"indent": "縮進",
+		"outdent": "縮退",
+		"color": "顏色",
+		"background": "背景",
+		"font": "字體",
+		"orderedList": "有序列表",
+		"bulletList": "无序列表",
+		"super": " 上標",
+		"sub": "下標",
+		"direction": "方向",
+		"align": "對齊",
+		"formula": "公式"
+	}
+}
