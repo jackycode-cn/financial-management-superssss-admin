@@ -14,8 +14,9 @@
 
   "i18n-ally.localesPaths": [ "src/locales/lang" ],
   "i18n-ally.namespace": true,
+  "i18n-ally.enabledParsers": [ "json" ],
   "i18n-ally.pathMatcher": "{locale}/{namespaces}.{ext}",
-  "i18n-ally.enabledFrameworks": [ "i18next","react", ],
+  "i18n-ally.enabledFrameworks": [ "i18next","react" ],
   "i18n-ally.keystyle": "flat",
   "i18n-ally.sourceLanguage": "en_US",
   "i18n-ally.defaultNamespace": "common",
@@ -37,5 +38,6 @@
   },
   "svg.preview.background": "dark-transparent",
   "i18n-ally.annotationDelimiter": "",
-  "i18n-ally.extract.keyMaxLength": 20
+  "i18n-ally.extract.keyMaxLength": 20,
+  "react-i18n.i18nPaths": "src\\locales\\lang"
 }

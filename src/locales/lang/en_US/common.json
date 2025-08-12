@@ -51,6 +51,7 @@
 		"sub": "Sub Script",
 		"direction": "Direction",
 		"align": "Align",
-		"formula": "Formula"
+		"formula": "Formula",
+		"pdf": "PDF"
 	}
 }

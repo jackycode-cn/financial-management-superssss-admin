@@ -51,6 +51,7 @@
 		"sub": "下標",
 		"direction": "方向",
 		"align": "對齊",
-		"formula": "公式"
+		"formula": "公式",
+		"pdf": "PDF导出"
 	}
 }

@@ -3,7 +3,8 @@ import "@/utils/highlight";
 
 import ReactQuill from "react-quill-new";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
+import { exportPdf } from "./exportPDF";
 import { StyledEditor } from "./styles";
 import Toolbar, { formats } from "./toolbar";
 
@@ -13,20 +14,33 @@ interface Props extends ReactQuill.ReactQuillProps {
 }
 export default function Editor({ id = "slash-quill", sample = false, ...other }: Props) {
 	const quillRef = useRef<ReactQuill>(null);
-	const modules: ReactQuill.QuillOptions["modules"] = {
-		toolbar: {
-			container: `#${id}`,
-		},
-		history: {
-			delay: 500,
-			maxStack: 100,
-			userOnly: true,
-		},
-		syntax: true,
-		clipboard: {
-			matchVisual: true,
-		},
-	};
+	const modules: ReactQuill.QuillOptions["modules"] = useMemo(() => {
+		return {
+			toolbar: {
+				container: `#${id}`,
+				handlers: {
+					pdf: () => {
+						const htmlEle = quillRef.current?.getEditingArea();
+						if (!htmlEle) {
+							return;
+						}
+						exportPdf(htmlEle).then((pdf) => {
+							pdf.save();
+						});
+					},
+				},
+			},
+			history: {
+				delay: 500,
+				maxStack: 100,
+				userOnly: true,
+			},
+			syntax: true,
+			clipboard: {
+				matchVisual: true,
+			},
+		};
+	}, [id]);
 
 	useEffect(() => {
 		const toolbarElement = document.getElementById(id);

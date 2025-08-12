@@ -1,4 +1,5 @@
 import useLocale from "@/locales/use-locale";
+import PDFButton from "./pdf-button";
 import { StyledToolbar } from "./styles";
 
 const HEADINGS = [
@@ -108,6 +109,11 @@ export default function Toolbar({ id, isSimple }: EditorToolbarProps) {
 				<div className="ql-formats">
 					{!isSimple && <button type="button" className="ql-formula" title={t("common.formula")} />}
 					<button type="button" className="ql-clean" title={t("common.clean")} />
+				</div>
+				<div className="ql-formats">
+					<button type="button" className="ql-pdf" title={t("common.pdf")}>
+						<PDFButton />
+					</button>
 				</div>
 			</div>
 		</StyledToolbar>
