@@ -234,9 +234,9 @@ export interface UserInfoEntity {
 
 	username: string;
 
-	avatar: string | null;
+	avatar?: string;
 
-	roleId: number | null;
+	roleId?: number;
 
 	account: string;
 }

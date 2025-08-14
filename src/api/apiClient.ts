@@ -1,13 +1,13 @@
-import type { Result } from "#/api";
 import { ResultStatus } from "#/enum";
 import { GLOBAL_CONFIG } from "@/global-config";
 import { t } from "@/locales/i18n";
 import userStore from "@/store/userStore";
+import type { CustomErrorResponse, CustomResponse, RefreshTokenEntity } from "@/types";
 import axios, { type AxiosError, type AxiosRequestConfig, type AxiosResponse } from "axios";
 import { toast } from "sonner";
 
 // Token 刷新接口
-const REFRESH_TOKEN_URL = "/auth/refresh-token";
+const REFRESH_TOKEN_URL = "/api/auth/refresh";
 
 // 普通请求实例
 const axiosInstance = axios.create({
@@ -46,7 +46,7 @@ let requestsQueue: ((token: string) => void)[] = [];
 /**
  * 刷新 token 并重试原始请求
  */
-const refreshTokenAndRetry = async (error: AxiosError<Result>) => {
+const refreshTokenAndRetry = async (error: AxiosError<CustomErrorResponse>) => {
 	const originalRequest: AxiosRequestConfig = { ...error.config };
 
 	if (originalRequest) {
@@ -72,7 +72,7 @@ const refreshTokenAndRetry = async (error: AxiosError<Result>) => {
 
 	try {
 		// 调用刷新 token 接口
-		const response = await refreshInstance.post(REFRESH_TOKEN_URL, {
+		const response = await refreshInstance.post<RefreshTokenEntity>(REFRESH_TOKEN_URL, {
 			refreshToken: userStore.getState().userToken.refreshToken,
 		});
 
@@ -108,18 +108,19 @@ const refreshTokenAndRetry = async (error: AxiosError<Result>) => {
 // =================== 响应拦截器 ===================
 
 axiosInstance.interceptors.response.use(
-	(res: AxiosResponse<Result<any>>) => {
+	(res: AxiosResponse<CustomResponse<any>>) => {
 		if (!res.data) throw new Error(t("sys.api.apiRequestFailed"));
-		const { status, data, message } = res.data;
+		const { code, data, message } = res.data;
 
-		if (status === ResultStatus.SUCCESS || status === ResultStatus.SUCCESS_POST) {
+		if (code === ResultStatus.SUCCESS || code === ResultStatus.SUCCESS_POST) {
 			return data;
 		}
 		throw new Error(message || t("sys.api.apiRequestFailed"));
 	},
-	async (error: AxiosError<Result>) => {
+	async (error: AxiosError<CustomErrorResponse>) => {
+		console.error(error);
 		const { response, message } = error || {};
-		const errMsg = response?.data?.message || message || t("sys.api.errorMessage");
+		const errMsg = response?.data?.errorMessage || message || t("sys.api.errorMessage");
 
 		// 如果是 401，尝试刷新 token
 		if (response?.status === 401) {

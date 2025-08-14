@@ -34,10 +34,10 @@ export default defineConfig(({ mode }) => {
 			host: true,
 			port: 3001,
 			proxy: {
-				"/api": {
-					target: "http://localhost:3000",
+				"/v1": {
+					target: "http://localhost:5000",
 					changeOrigin: true,
-					rewrite: (path) => path.replace(/^\/api/, ""),
+					rewrite: (path) => path.replace(/^\/v1/, ""),
 					secure: false,
 				},
 			},
