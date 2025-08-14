@@ -146,21 +146,21 @@ axiosInstance.interceptors.response.use(
 // =================== API 客户端封装 ===================
 
 class APIClient {
-	get<T = unknown>(config: AxiosRequestConfig): Promise<T> {
-		return this.request<T>({ ...config, method: "GET" });
+	get<T = unknown>(url: string, config?: AxiosRequestConfig): Promise<T> {
+		return this.request<T>({ url, ...config, method: "GET" });
 	}
-	post<T = unknown>(config: AxiosRequestConfig): Promise<T> {
-		return this.request<T>({ ...config, method: "POST" });
+	post<T = unknown>(url: string, data: any = {}, config?: AxiosRequestConfig): Promise<T> {
+		return this.request<T>({ url, data, ...config, method: "POST" });
 	}
-	put<T = unknown>(config: AxiosRequestConfig): Promise<T> {
-		return this.request<T>({ ...config, method: "PUT" });
+	put<T = unknown>(url: string, data: any = {}, config?: AxiosRequestConfig): Promise<T> {
+		return this.request<T>({ url, data, ...config, method: "PUT" });
 	}
-	delete<T = unknown>(config: AxiosRequestConfig): Promise<T> {
-		return this.request<T>({ ...config, method: "DELETE" });
+	delete<T = unknown>(url: string, config?: AxiosRequestConfig): Promise<T> {
+		return this.request<T>({ url, ...config, method: "DELETE" });
 	}
 	request<T = unknown>(config: AxiosRequestConfig): Promise<T> {
 		return axiosInstance.request<any, T>(config);
 	}
 }
 
-export default new APIClient();
+export const apiClient = new APIClient();
