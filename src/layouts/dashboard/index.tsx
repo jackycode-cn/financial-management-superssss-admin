@@ -1,13 +1,21 @@
+import { ThemeLayout } from "#/enum";
 import Logo from "@/components/logo";
 import { down, useMediaQuery } from "@/hooks";
 import { useSettings } from "@/store/settingStore";
-import { ThemeLayout } from "#/enum";
+import { useRequestUserInfo } from "@/store/userStore";
+import { useEffect } from "react";
 import Header from "./header";
 import Main from "./main";
 import { NavHorizontalLayout, NavMobileLayout, NavVerticalLayout, useFilteredNavData } from "./nav";
 
 export default function DashboardLayout() {
 	const isMobile = useMediaQuery(down("md"));
+	// 请求用户信息
+	const requestUserInfo = useRequestUserInfo();
+
+	useEffect(() => {
+		requestUserInfo();
+	}, [requestUserInfo]);
 
 	return (
 		<div data-slot="slash-layout-root" className="w-full min-h-screen bg-background">
