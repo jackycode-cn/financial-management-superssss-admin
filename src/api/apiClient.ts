@@ -52,7 +52,10 @@ const refreshTokenAndRetry = async (error: AxiosError<CustomErrorResponse>) => {
 	if (originalRequest) {
 		originalRequest.headers = originalRequest?.headers || {};
 	}
-
+	const refreshToken = userStore.getState().userToken?.refreshToken;
+	if (!refreshToken) {
+		return Promise.reject(new Error(t("sys.api.errMsg401")));
+	}
 	// 如果正在刷新，挂起请求到队列
 	if (isRefreshing) {
 		return new Promise((resolve) => {
@@ -72,14 +75,23 @@ const refreshTokenAndRetry = async (error: AxiosError<CustomErrorResponse>) => {
 
 	try {
 		// 调用刷新 token 接口
-		const response = await refreshInstance.post<RefreshTokenEntity>(REFRESH_TOKEN_URL, {
-			refreshToken: userStore.getState().userToken.refreshToken,
-		});
-
-		const newToken = response.data.accessToken;
+		const response = await refreshInstance.post<CustomResponse<RefreshTokenEntity>>(
+			REFRESH_TOKEN_URL,
+			{},
+			{
+				headers: {
+					Authorization: `Bearer ${refreshToken}`,
+				},
+			},
+		);
+		const newToken = response.data.data?.accessToken;
+		const newRefreshToken = response.data.data?.refreshToken;
+		if (!newToken || !newRefreshToken) {
+			throw new Error(t("sys.api.errMsg401"));
+		}
 		userStore.getState().actions.setUserToken({
 			accessToken: newToken,
-			refreshToken: response.data.refreshToken,
+			refreshToken: newRefreshToken,
 		});
 
 		// 执行队列中的请求
@@ -132,7 +144,8 @@ axiosInstance.interceptors.response.use(
 			}
 
 			try {
-				return await refreshTokenAndRetry(error);
+				const result = await refreshTokenAndRetry(error);
+				return result;
 			} catch (e) {
 				return Promise.reject(e);
 			}
