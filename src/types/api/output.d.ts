@@ -1135,6 +1135,8 @@ export interface CreateArticleDto {
 	 * 外部文章作者
 	 */
 	external_author?: string;
+	/** 文章缩略图 */
+	thumbnail?: string;
 }
 
 export interface ArticleEntity {
@@ -1220,6 +1222,8 @@ export interface ArticleEntity {
 	 * 外部文章作者
 	 */
 	external_author?: string;
+	/** 文章缩略图 */
+	thumbnail?: string;
 
 	id: string;
 }
@@ -1313,4 +1317,77 @@ export interface UpdateArticleDto {
 	 * 外部文章作者
 	 */
 	external_author?: string;
+	/** 文章缩略图 */
+	thumbnail?: string;
+}
+
+export interface CategoryResponseDto {
+	/**
+	 * 分类ID
+	 */
+	id: number;
+
+	name: string;
+	/**
+	 * 父分类ID
+	 */
+	parent_id?: number | null;
+
+	level: number;
+	/**
+	 * 分类路径
+	 */
+	slug?: string | null;
+	/**
+	 * 创建时间
+	 */
+	created_at: string;
+	/**
+	 * 更新时间
+	 */
+	updated_at: string;
+}
+
+export interface CreateArticleCategoryDto {
+	/**
+	 * Category name
+	 */
+	name: string;
+	/**
+	 * Parent category ID
+	 */
+	parent_id?: number;
+	/**
+	 * Category level
+	 */
+	level?: number;
+	/**
+	 * URL-friendly category name
+	 */
+	slug?: string;
+}
+
+export interface CategoryResponseWithPaginationDto {
+	items: CategoryResponseDto[];
+
+	pagination: PaginationResponseEntity;
+}
+
+export interface UpdateArticleCategoryDto {
+	/**
+	 * Category name
+	 */
+	name?: string;
+	/**
+	 * Parent category ID
+	 */
+	parent_id?: number;
+	/**
+	 * Category level
+	 */
+	level?: number;
+	/**
+	 * URL-friendly category name
+	 */
+	slug?: string;
 }
