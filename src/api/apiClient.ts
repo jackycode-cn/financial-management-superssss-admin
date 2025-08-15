@@ -172,6 +172,9 @@ class APIClient {
 	delete<T = unknown>(url: string, config?: AxiosRequestConfig): Promise<T> {
 		return this.request<T>({ url, ...config, method: "DELETE" });
 	}
+	patch<T = unknown>(url: string, data: any = {}, config?: AxiosRequestConfig): Promise<T> {
+		return this.request<T>({ url, data, ...config, method: "PATCH" });
+	}
 	request<T = unknown>(config: AxiosRequestConfig): Promise<T> {
 		return axiosInstance.request<any, T>(config);
 	}
