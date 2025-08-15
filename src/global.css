@@ -141,3 +141,24 @@
   --layout-header-height: 64px;
   --layout-multi-tabs-height: 48px;
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 3px;
+  /* 滚动条宽度 */
+  height: 3px;
+  /* 横向滚动条高度 */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #9ca3af;
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #bac8e4;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #dfc3c3;
+  /* 悬停时滑块的颜色 */
+}

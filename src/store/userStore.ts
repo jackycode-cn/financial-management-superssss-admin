@@ -5,7 +5,7 @@ import type { SignInReq } from "@/api/services/userService";
 
 import type { UserInfo, UserToken } from "#/entity";
 import { StorageEnum } from "#/enum";
-import { reqLogingetlogin } from "@/api/services";
+import { reqLogingetlogin, reqUsergetownprofile } from "@/api/services";
 import type { UserInfoEntity } from "@/types";
 import { toast } from "sonner";
 
@@ -76,5 +76,28 @@ export const useSignIn = () => {
 
 	return signIn;
 };
+
+/** 请求用户信息 */
+export function useRequestUserInfo() {
+	const { setUserInfo } = useUserActions();
+	const requestUserInfo = async () => {
+		try {
+			const { userName, email, headImgUrl, userId } = await reqUsergetownprofile();
+			setUserInfo({
+				username: userName,
+				email,
+				avatar: headImgUrl,
+				id: userId,
+			});
+		} catch (err) {
+			toast.error(err.message, {
+				position: "top-center",
+			});
+			// logout();
+			throw err;
+		}
+	};
+	return requestUserInfo;
+}
 
 export default useUserStore;
