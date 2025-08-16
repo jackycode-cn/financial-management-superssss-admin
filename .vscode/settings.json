@@ -9,21 +9,23 @@
     "source.organizeImports.biome": "explicit"
   },
 
-  "tailwindCSS.classFunctions": [ "cn", "clsx", "cva", "twMerge", ],
+  "tailwindCSS.classFunctions": ["cn", "clsx", "cva", "twMerge"],
   "tailwindCSS.emmetCompletions": true,
-  "i18n-ally.localesPaths": [ "src/locales/lang" ],
+  "i18n-ally.localesPaths": ["src/locales/lang"],
   "i18n-ally.namespace": false,
-  "i18n-ally.enabledParsers": [ "json" ],
+  "i18n-ally.enabledParsers": ["json"],
   "i18n-ally.pathMatcher": "{locale}/{namespaces}.{ext}",
-  "i18n-ally.enabledFrameworks": [ "i18next","react" ],
+  "i18n-ally.enabledFrameworks": ["i18next", "react"],
   "i18n-ally.keystyle": "flat",
   "i18n-ally.sourceLanguage": "en_US",
-  "i18n-ally.defaultNamespace": "",
   "i18n-ally.displayLanguage": "zh_CN",
   "i18n-ally.localeCountryMap": {
-    "en":"en_US",
-    "zh_CN":"zh_CN",
-    "zh_HK":"zh_HK"
+    "en_US": "en_US",
+    "EN_US": "en_US",
+    "EN": "en_US",
+    "en": "en_US",
+    "zh_CN": "zh_CN",
+    "zh_HK": "zh_HK"
   },
   "[javascript]": {
     "editor.defaultFormatter": "biomejs.biome"

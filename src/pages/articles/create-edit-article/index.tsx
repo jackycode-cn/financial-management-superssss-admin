@@ -8,6 +8,7 @@ import { Card } from "@/ui/card";
 import { htmlToText } from "@/utils/htmlToText";
 import type React from "react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import CreateArticleModalMemo from "./create-article-modal";
@@ -34,7 +35,9 @@ const InitailFormValue: CreateArticleDto = {
 	external_url: "",
 	external_author: "",
 };
+
 const CreateArticle: React.FC<CreateArticleProps> = ({ title }) => {
+	const { t } = useTranslation();
 	const { articleId } = useParams();
 	const navigate = useNavigate();
 	const isEditMode = !!articleId;
@@ -44,7 +47,7 @@ const CreateArticle: React.FC<CreateArticleProps> = ({ title }) => {
 	const handleSubmit = () => {
 		const textContent = htmlToText(quillFull);
 		if (!textContent.trim()) {
-			toast.error("請輸入文章的內容");
+			toast.error(t("articlePage.contentEmptyError"));
 			return;
 		}
 		setFormValue((prev) => ({ ...prev, content: quillFull }));
@@ -57,10 +60,10 @@ const CreateArticle: React.FC<CreateArticleProps> = ({ title }) => {
 	const handleSubmitCreateOrEdit = async (data: CreateArticleDto) => {
 		if (isEditMode) {
 			await reqArticleupdate(articleId, data);
-			toast.success("文章編輯成功");
+			toast.success(t("articlePage.editSuccess"));
 		} else {
 			await reqArticlecreate(data);
-			toast.success("文章創建成功");
+			toast.success(t("articlePage.createSuccess"));
 		}
 		setFormValue(InitailFormValue);
 		setQuillFull("");
@@ -79,7 +82,7 @@ const CreateArticle: React.FC<CreateArticleProps> = ({ title }) => {
 					setFormValue({ ...articleData, content: articleData.content || "" });
 					setQuillFull(articleData.content || "");
 				} catch (error) {
-					toast.error("文章加載失敗");
+					toast.error(t("articlePage.loadError"));
 					navigate("/articles");
 				}
 			};
@@ -88,28 +91,30 @@ const CreateArticle: React.FC<CreateArticleProps> = ({ title }) => {
 			setFormValue(InitailFormValue);
 			setQuillFull("");
 		}
-	}, [articleId, isEditMode, navigate]);
+	}, [articleId, isEditMode, navigate, t]);
 
 	return (
 		<Card>
 			<div className="createArticle-container w-full  mx-auto p-4 relative">
 				<h2 className="scroll-m-20 tracking-wide font-semibold text-2xl text-text-primary mb-6 pb-2 border-b border-gray-200 dark:border-gray-700">
 					<span className="bg-clip-text text-transparent bg-gradient-to-r from-text-primary to-blue-300">
-						{title ?? "文章"}
+						{title ?? t("articlePage.titleDefault")}
 					</span>
-					<span className="text-gray-400 text-base ml-2">{isEditMode ? "編輯" : "發佈"}</span>
+					<span className="text-gray-400 text-base ml-2">
+						{isEditMode ? t("articlePage.editLabel") : t("articlePage.publishLabel")}
+					</span>
 				</h2>
 				{/* 富文本编辑器 */}
 				<Editor
 					value={quillFull}
 					onChange={setQuillFull}
-					placeholder="請輸入內容"
+					placeholder={t("articlePage.contentPlaceholder")}
 					className="w-full max-h-[65vh] border border-gray-300 rounded"
 				/>
 				{/* 提交按钮 */}
 				<div className="mt-4 flex justify-end">
 					<Button variant="ghost" className="bg-success!" onClick={handleSubmit}>
-						提交
+						{t("articlePage.submitButton")}
 					</Button>
 				</div>
 			</div>
