@@ -13,7 +13,6 @@ import { memo, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-// 表单验证Schema
 const articleSchema = z.object({
 	title: z.string().min(3, "标题至少3个字符").max(100, "标题最多100个字符"),
 	slug: z
@@ -44,6 +43,7 @@ const articleSchema = z.object({
 				level: z.number().optional(),
 			}),
 		)
+		.nullable()
 		.optional(),
 });
 
@@ -75,11 +75,10 @@ function CreateArticleModal({
 
 	const form = useForm<FormValues>({
 		defaultValues: formValue as FormValues,
-		resolver: zodResolver(articleSchema),
+		resolver: zodResolver(articleSchema.strip()),
 		mode: "onChange",
 	});
 	const handleSubmit = async (values: FormValues) => {
-		console.log(values);
 		setIsSubmitting(true);
 		setError(null);
 		try {
@@ -97,6 +96,12 @@ function CreateArticleModal({
 	useEffect(() => {
 		form.reset(formValue);
 	}, [formValue, form]);
+
+	useEffect(() => {
+		if (Object.keys(form.formState.errors).length > 0) {
+			console.error("表单验证错误:", form.formState.errors);
+		}
+	}, [form.formState.errors]);
 
 	return (
 		<Dialog open={show} onOpenChange={onCancel}>
