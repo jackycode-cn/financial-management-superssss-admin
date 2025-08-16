@@ -100,15 +100,15 @@ function CreateArticleModal({
 
 	return (
 		<Dialog open={show} onOpenChange={onCancel}>
-			<DialogContent className="sm:max-w-[600px] h-[90vh]">
-				<DialogHeader>
+			<DialogContent className="sm:max-w-[600px] h-[80vh] ">
+				<DialogHeader className="h-[60px]">
 					<DialogTitle>{type === "create" ? title || "创建文章" : title || "编辑文章"}</DialogTitle>
 					<DialogDescription>{description}</DialogDescription>
 				</DialogHeader>
 
 				<Form {...form}>
-					<form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-3 ">
-						<div className="overflow-y-auto h-3/4 custom-scrollbar ">
+					<form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-3 h-[75vh] relative">
+						<div className="overflow-y-auto h-5/6 custom-scrollbar ">
 							{/* 标题和Slug */}
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 								<FormField
@@ -392,7 +392,7 @@ function CreateArticleModal({
 
 						{/* 操作按钮 */}
 
-						<DialogFooter className="flex justify-end gap-3 pt-2 border-t bottom-0 right-0">
+						<DialogFooter className="flex justify-end gap-3 pt-2 border-t absolute bottom-[80px] right-2">
 							<Button type="button" variant="outline" onClick={onCancel} disabled={isSubmitting}>
 								取消
 							</Button>
