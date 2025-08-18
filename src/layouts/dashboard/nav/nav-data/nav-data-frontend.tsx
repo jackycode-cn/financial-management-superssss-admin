@@ -61,6 +61,23 @@ export const frontendNavData: NavProps["data"] = [
 					},
 				],
 			},
+			{
+				title: "dashboard.nav.article",
+				path: "/articles",
+				icon: <Icon icon="stash:article" size="24" />,
+				children: [
+					{
+						title: "dashboard.nav.article",
+						path: "/articles/create",
+						icon: <Icon icon="stash:article" size="24" />,
+					},
+					{
+						title: "dashboard.nav.article.list",
+						path: "/articles/list",
+						icon: <Icon icon="stash:article-alt-duotone" size="24" />,
+					},
+				],
+			},
 			// menulevel
 			{
 				title: "sys.nav.menulevel.index",
@@ -243,11 +260,6 @@ export const frontendNavData: NavProps["data"] = [
 				title: "sys.nav.blank",
 				path: "/blank",
 				icon: <Icon icon="local:ic-blank" size="24" />,
-			},
-			{
-				title: "dashboard.nav.article",
-				path: "/articles",
-				icon: <Icon icon="stash:article" size="24" />,
 			},
 		],
 	},

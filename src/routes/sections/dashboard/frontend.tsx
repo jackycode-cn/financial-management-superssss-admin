@@ -108,6 +108,7 @@ export const frontendDashboardRoutes: RouteObject[] = [
 			{ index: true, element: <Navigate to="create" replace /> },
 			{ path: "create", element: Component("/pages/articles/create-edit-article") },
 			{ path: "edit/:articleId", element: Component("/pages/articles/create-edit-article") },
+			{ path: "list", element: Component("/pages/articles/list") },
 		],
 	},
 ];

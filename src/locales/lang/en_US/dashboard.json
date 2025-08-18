@@ -2,7 +2,8 @@
 	"dashboard": {
 		"title": "Dashboard",
 		"nav": {
-			"article": "Article"
+			"article": "Article",
+			"article.list": "Article List"
 		}
 	}
 }

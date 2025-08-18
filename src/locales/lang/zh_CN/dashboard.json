@@ -2,7 +2,8 @@
 	"dashboard": {
 		"title": "面板",
 		"nav": {
-			"article": "文章"
+			"article": "文章",
+			"article.list": "文章列表"
 		}
 	}
 }
