@@ -79,7 +79,24 @@ const CreateArticle: React.FC<CreateArticleProps> = ({ title }) => {
 			const fetchArticleDetail = async () => {
 				try {
 					const articleData = await reqArticlefindone(articleId);
-					setFormValue({ ...articleData, content: articleData.content || "" });
+					setFormValue({
+						...articleData,
+						content: articleData.content || "",
+						description: articleData.description || "",
+						seo_title: articleData.seo_title || "",
+						seo_description: articleData.seo_description || "",
+						seo_keywords: articleData.seo_keywords || "",
+						thumbnail: articleData.thumbnail || "",
+						is_archive: articleData.is_archive || false,
+						is_top: articleData.is_top || false,
+						is_featured: articleData.is_featured || false,
+						is_hot: articleData.is_hot || false,
+						is_published: articleData.is_published || false,
+						is_external: articleData.is_external || false,
+						external_url: articleData.external_url || "",
+						external_author: articleData.external_author || "",
+						category_id: articleData.category_id || undefined,
+					});
 					setQuillFull(articleData.content || "");
 				} catch (error) {
 					toast.error(t("articlePage.loadError"));

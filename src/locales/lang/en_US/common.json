@@ -52,6 +52,7 @@
 		"direction": "Direction",
 		"align": "Align",
 		"formula": "Formula",
-		"pdf": "PDF"
+		"pdf": "PDF",
+		"all": "All"
 	}
 }

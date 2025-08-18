@@ -1226,6 +1226,10 @@ export interface ArticleEntity {
 	thumbnail?: string;
 
 	id: string;
+	/** 文章的创建时间 */
+	created_at?: string;
+	/** 文章关联的分类信息 */
+	article_categories?: Pick<CategoryResponseDto, "id" | "name" | "slug">;
 }
 
 export interface ArticlesEntities {
