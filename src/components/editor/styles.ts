@@ -3,6 +3,7 @@ import { rgbAlpha } from "@/utils/theme";
 import styled from "styled-components";
 
 const StyledEditor = styled.div`
+  /* 标题样式 */
   h1 {
     font-size: 64px;
     line-height: 1.25;
@@ -33,37 +34,51 @@ const StyledEditor = styled.div`
     line-height: 1.25;
     font-weight: 600;
   }
+
+  /* 图片 */
   img {
     display: inline;
+    max-width: 100%;
+    height: auto;
   }
+
+  /* 容器 */
   overflow: hidden;
   position: relative;
   border-radius: 8px;
-  border: 1px solid ${rgbAlpha(themeVars.colors.palette.gray[200], 0.2)};
+  border: 1px solid rgba(145, 158, 171, 0.2);
+
+  /* Quill 容器 */
   & .ql-container.ql-snow {
     border: none;
     line-height: 1.6;
     font-weight: 400;
-    font-size: 0.875rem;
+    font-size: 0.875rem; /* 14px */
   }
+
+  /* 编辑器内容 */
   & .ql-editor {
     min-height: 160px;
     max-height: 640px;
     background-color: rgba(145, 158, 171, 0.08);
+
     &.ql-blank::before {
       font-style: normal;
-      color: ${themeVars.colors.text.secondary};
+      color: #6e6e6e; /* secondary 文本色 */
     }
+
     & pre.ql-syntax {
       border-radius: 8px;
-      line-height: 1.57143;
-      font-size: 0.875rem;
-      font-family: 'Public Sans', sans-serif;
+      line-height: 1.57;
+      font-size: 0.875rem; /* 14px */
+      font-family: "Public Sans", sans-serif;
       font-weight: 400;
       padding: 16px;
-      border-radius: 8px;
-      background-color: ${themeVars.colors.background.neutral};
+      background-color: #f4f4f4; /* neutral 背景 */
     }
+    & ol li:before {
+      content: '\\2022';   
+    }  
   }
 `;
 

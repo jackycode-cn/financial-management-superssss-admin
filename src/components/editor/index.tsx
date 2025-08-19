@@ -1,6 +1,5 @@
 /* eslint-disable import/order */
 import "@/utils/highlight";
-
 import ReactQuill from "react-quill-new";
 
 import { useEffect, useMemo, useRef } from "react";
