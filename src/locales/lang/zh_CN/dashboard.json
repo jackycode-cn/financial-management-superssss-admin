@@ -3,7 +3,8 @@
 		"title": "面板",
 		"nav": {
 			"article": "文章",
-			"article.list": "文章列表"
+			"article.list": "文章列表",
+			"article.category": "文章分类"
 		}
 	}
 }

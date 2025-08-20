@@ -76,6 +76,11 @@ export const frontendNavData: NavProps["data"] = [
 						path: "/articles/list",
 						icon: <Icon icon="stash:article-alt-duotone" size="24" />,
 					},
+					{
+						title: "dashboard.nav.article.category",
+						path: "/articles/category",
+						icon: <Icon icon="stash:article" size="24" />,
+					},
 				],
 			},
 			// menulevel

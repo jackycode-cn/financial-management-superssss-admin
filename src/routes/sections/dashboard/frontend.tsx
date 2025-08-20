@@ -109,6 +109,7 @@ export const frontendDashboardRoutes: RouteObject[] = [
 			{ path: "create", element: Component("/pages/articles/create-edit-article") },
 			{ path: "edit/:articleId", element: Component("/pages/articles/create-edit-article") },
 			{ path: "list", element: Component("/pages/articles/list") },
+			{ path: "category", element: Component("/pages/articles/article-category") },
 		],
 	},
 ];

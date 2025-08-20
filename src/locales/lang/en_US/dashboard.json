@@ -3,7 +3,8 @@
 		"title": "Dashboard",
 		"nav": {
 			"article": "Article",
-			"article.list": "Article List"
+			"article.list": "Article List",
+			"article.category": "Article Category"
 		}
 	}
 }
