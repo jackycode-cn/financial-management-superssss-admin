@@ -34,6 +34,7 @@ const InitailFormValue: CreateArticleDto = {
 	is_external: false,
 	external_url: "",
 	external_author: "",
+	tags: [],
 };
 
 const CreateArticle: React.FC<CreateArticleProps> = ({ title }) => {
@@ -96,6 +97,12 @@ const CreateArticle: React.FC<CreateArticleProps> = ({ title }) => {
 						external_url: articleData.external_url || "",
 						external_author: articleData.external_author || "",
 						category_id: articleData.category_id || undefined,
+						tags: articleData.articles_tags
+							? articleData.articles_tags.map((tag) => ({
+									name: tag.name,
+									slug: tag.slug,
+								}))
+							: [],
 					});
 					setQuillFull(articleData.content || "");
 				} catch (error) {
@@ -139,6 +146,7 @@ const CreateArticle: React.FC<CreateArticleProps> = ({ title }) => {
 				title={title}
 				show={showArticle}
 				type={isEditMode ? "edit" : "create"}
+				description="articleModal.fields.description-tip"
 				categories={categoryList}
 				formValue={formValue}
 				onCancel={handleCancel}

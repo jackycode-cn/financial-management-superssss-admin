@@ -1,4 +1,4 @@
-import type { CreateArticleDto } from "@/types/api/output.d.ts";
+import type { CreateArticleDto, TagDto } from "@/types/api/output.d.ts";
 import { Button } from "@/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/ui/form";
@@ -12,20 +12,21 @@ import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { z } from "zod";
+import MyTags from "../../../components/Tags/my-tags";
 
 const articleSchema = z.object({
-	title: z.string().min(3, "标题至少3个字符").max(100, "标题最多100个字符"),
+	title: z.string().min(3, "標題至少3個字符").max(100, "標題最多100個字符"),
 	slug: z
 		.string()
-		.min(3, "Slug至少3个字符")
-		.max(50, "Slug最多50个字符")
-		.regex(/^[a-z0-9-]+$/, "Slug只能包含小写字母、数字和连字符"),
-	description: z.string().max(200, "描述最多200个字符").optional(),
+		.min(3, "Slug至少3個字符")
+		.max(50, "Slug最多50個字符")
+		.regex(/^[a-z0-9-]+$/, "Slug只能包含小寫英文字符、數字和短橫線"),
+	description: z.string().max(200, "描述最多200個字符").optional(),
 	content: z.string().optional(),
 	category_id: z.number().optional(),
-	seo_title: z.string().max(60, "SEO标题最多60个字符").optional(),
-	seo_description: z.string().max(160, "SEO描述最多160个字符").optional(),
-	seo_keywords: z.string().max(100, "SEO关键词最多100个字符").optional(),
+	seo_title: z.string().max(60, "SEO標題最多60個字符").optional(),
+	seo_description: z.string().max(160, "SEO描述最多160個字符").optional(),
+	seo_keywords: z.string().max(100, "SEO關鍵詞最多100個字符").optional(),
 	is_archive: z.boolean().optional(),
 	is_top: z.boolean().optional(),
 	is_featured: z.boolean().optional(),
@@ -33,7 +34,8 @@ const articleSchema = z.object({
 	is_published: z.boolean().optional(),
 	is_external: z.boolean().optional(),
 	external_url: optionalUrl(),
-	external_author: z.string().max(50, "作者名最多50个字符").optional(),
+	external_author: z.string().max(50, "外部作者最多50個字符").optional(),
+
 	thumbnail: optionalUrl(),
 	toc: z
 		.array(
@@ -44,6 +46,21 @@ const articleSchema = z.object({
 			}),
 		)
 		.nullable()
+		.optional(),
+	tags: z
+		.array(
+			z.object({
+				name: z.string().max(20, "標籤最多20個字符"),
+				slug: z
+					.string()
+					.min(3, "Slug至少3個字符")
+					.max(50, "Slug最多50個字符")
+					.regex(/^[a-z0-9-]+$/, "Slug只能包含小寫英文字符、數字和短橫線")
+
+					.nullable()
+					.optional(),
+			}),
+		)
 		.optional(),
 });
 
@@ -106,6 +123,15 @@ function CreateArticleModal({
 		}
 	}, [form.formState.errors]);
 
+	const changeTags = useCallback(
+		(tags: string[]) => {
+			form.setValue(
+				"tags",
+				tags.map((tag) => ({ name: tag })),
+			);
+		},
+		[form],
+	);
 	return useMemo(
 		() => (
 			<Dialog open={show} onOpenChange={onCancel}>
@@ -346,7 +372,23 @@ function CreateArticleModal({
 										)}
 									/>
 								</div>
-								{/* 缩略图 */}
+								<div className="grid mt-2 mb-2">
+									<FormField
+										name="tags"
+										render={({ field, fieldState: { error } }) => {
+											const tags: string[] = field.value.map((tag: TagDto) => tag.name);
+											return (
+												<FormItem>
+													<FormLabel>{t("articleModal.fields.tags")}</FormLabel>
+													<FormControl>
+														<MyTags tags={tags} onChange={changeTags} />
+													</FormControl>
+													{error && <FormMessage>{error.message}</FormMessage>}
+												</FormItem>
+											);
+										}}
+									/>
+								</div>
 
 								{/* 状态开关 */}
 								<div className="grid grid-cols-2 gap-4">
@@ -452,7 +494,7 @@ function CreateArticleModal({
 				</DialogContent>
 			</Dialog>
 		),
-		[show, onCancel, form, t, categories, isSubmitting, title, type, description, handleSubmit, isExternal],
+		[show, onCancel, form, t, categories, isSubmitting, title, type, description, handleSubmit, isExternal, changeTags],
 	);
 }
 const CreateArticleModalMemo = memo(CreateArticleModal);
