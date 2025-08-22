@@ -1051,7 +1051,16 @@ export interface TocInfoDto {
 
 	level?: number;
 }
-
+export interface CreateTagDto {
+	/**
+	 * 標籤名稱
+	 */
+	name: string;
+	/**
+	 * 標籤 Slug
+	 */
+	slug?: string | null;
+}
 export interface CreateArticleDto {
 	/**
 	 * 文章ID 公開的id
@@ -1137,8 +1146,25 @@ export interface CreateArticleDto {
 	external_author?: string;
 	/** 文章缩略图 */
 	thumbnail?: string;
+	/**
+	 * 標籤
+	 */
+	tags?: CreateTagDto[];
 }
-
+export interface TagDto {
+	/**
+	 * 標籤名稱
+	 */
+	name: string;
+	/**
+	 * 標籤 Slug
+	 */
+	slug?: string | null;
+	/**
+	 * 標籤 ID
+	 */
+	id: number;
+}
 export interface ArticleEntity {
 	/**
 	 * 文章ID 公開的id
@@ -1230,6 +1256,10 @@ export interface ArticleEntity {
 	created_at?: string;
 	/** 文章关联的分类信息 */
 	article_categories?: Pick<CategoryResponseDto, "id" | "name" | "slug">;
+	/**
+	 * 文章的标签
+	 */
+	articles_tags?: TagDto[];
 }
 
 export interface ArticlesEntities {
@@ -1323,6 +1353,10 @@ export interface UpdateArticleDto {
 	external_author?: string;
 	/** 文章缩略图 */
 	thumbnail?: string;
+	/**
+	 * 標籤
+	 */
+	tags?: CreateTagDto[];
 }
 
 export interface CategoryResponseDto {
