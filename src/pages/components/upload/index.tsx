@@ -17,7 +17,7 @@ export default function UploadPage() {
 	const boxPlaceHolder = (
 		<div className="flex flex-col">
 			<Icon icon="eva:cloud-upload-fill" size={40} />
-			<span className="text-sm text-gray-500">Upload File</span>
+			<span className="text-sm text-gray-500">上傳文件</span>
 		</div>
 	);
 	const UploadFileTab = (
@@ -26,7 +26,7 @@ export default function UploadPage() {
 				<CardHeader>
 					<CardTitle>
 						<div className="flex items-center gap-2">
-							<span>Upload Multi File</span>
+							<span>多文件上傳</span>
 							{ThumbnailSwitch}
 						</div>
 					</CardTitle>
@@ -39,7 +39,8 @@ export default function UploadPage() {
 				<CardHeader>
 					<CardTitle>
 						<div className="flex items-center gap-2">
-							<span>Upload Single File</span>
+							<span>單文件上傳</span>
+
 							{ThumbnailSwitch}
 						</div>
 					</CardTitle>
@@ -55,7 +56,7 @@ export default function UploadPage() {
 			<CardHeader>
 				<CardTitle>
 					<div className="flex items-center gap-2">
-						<span>Upload Avatar</span>
+						<span>上傳頭像</span>
 						{ThumbnailSwitch}
 					</div>
 				</CardTitle>
@@ -79,9 +80,9 @@ export default function UploadPage() {
 	return (
 		<Tabs defaultValue="upload--file" className="w-full">
 			<TabsList>
-				<TabsTrigger value="upload--file">Upload Single File</TabsTrigger>
-				<TabsTrigger value="upload-avatar">Upload Avatar</TabsTrigger>
-				<TabsTrigger value="upload-box">Upload Box</TabsTrigger>
+				<TabsTrigger value="upload--file">單文件上傳</TabsTrigger>
+				<TabsTrigger value="upload-avatar">上傳頭像</TabsTrigger>
+				<TabsTrigger value="upload-box">上傳框</TabsTrigger>
 			</TabsList>
 			<TabsContent value="upload--file">{UploadFileTab}</TabsContent>
 			<TabsContent value="upload-avatar">{UploadAvatarTab}</TabsContent>

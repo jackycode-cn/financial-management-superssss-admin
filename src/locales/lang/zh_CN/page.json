@@ -62,5 +62,6 @@
 	"articleModal.fields.externalArticle": "外部文章",
 	"articleModal.fields.isHotDesc": "标记为热内容",
 	"articleModal.fields.descriptionTip": "改进文章的信息",
-	"articleModal.fields.tags": "文章标签"
+	"articleModal.fields.tags": "文章标签",
+	"articleModal.fields.description-tip": "完善文章信息"
 }

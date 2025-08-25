@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { z } from "zod";
 import MyTags from "../../../components/Tags/my-tags";
+import { UploadThumbnailWithMode } from "./UploadThumbnailWithMode";
 
 const articleSchema = z.object({
 	title: z.string().min(3, "標題至少3個字符").max(100, "標題最多100個字符"),
@@ -36,7 +37,7 @@ const articleSchema = z.object({
 	external_url: optionalUrl(),
 	external_author: z.string().max(50, "外部作者最多50個字符").optional(),
 
-	thumbnail: optionalUrl(),
+	thumbnail: optionalUrl(true),
 	toc: z
 		.array(
 			z.object({
@@ -352,20 +353,21 @@ function CreateArticleModal({
 										)}
 									/>
 								</div>
-								<div className="grid mt-2 mb-2">
+								<div className="grid mt-2 mb-4">
 									<FormField
 										name="thumbnail"
 										control={form.control}
 										render={({ field, fieldState: { error } }) => (
-											<FormItem className="flex flex-col items-start justify-start mt-1">
+											<FormItem className="flex flex-col items-start justify-start mt-1 w-full">
 												<FormLabel>{t("articleModal.fields.thumbnail")}</FormLabel>
 												<FormControl>
-													<Input
-														placeholder={t("articleModal.fields.thumbnailPlaceholder")}
-														{...field}
+													<UploadThumbnailWithMode
+														value={field.value}
+														onChange={field.onChange}
 														disabled={isSubmitting}
 													/>
 												</FormControl>
+
 												{/* 错误提醒 */}
 												{error && <FormMessage>{error.message}</FormMessage>}
 											</FormItem>

@@ -16,6 +16,8 @@ export type GlobalConfig = {
 	apiBaseUrl: string;
 	/** Routing mode: frontend routing or backend routing */
 	routerMode: "frontend" | "backend";
+	/** URL for file upload endpoint */
+	uploadFileUrl: string;
 };
 
 /**
@@ -32,6 +34,7 @@ export const GLOBAL_CONFIG: GlobalConfig = {
 	publicPath: import.meta.env.VITE_APP_PUBLIC_PATH || "/",
 	apiBaseUrl: import.meta.env.VITE_APP_API_BASE_URL || "/api",
 	routerMode: import.meta.env.VITE_APP_ROUTER_MODE || "frontend",
+	uploadFileUrl: import.meta.env.VITE_APP_UPLOAD_FILE_URL || "/v1/api/file/upload/image",
 };
 
 console.log(GLOBAL_CONFIG);

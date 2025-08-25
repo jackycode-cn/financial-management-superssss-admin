@@ -46,7 +46,8 @@
 			"isArchive": "Archive",
 			"isArchiveDesc": "Mark as archived content",
 			"tags": "Article Tags",
-			"descriptionTip": "Improve the information of the article"
+			"descriptionTip": "Improve the information of the article",
+			"description-tip": "Complete the article information"
 		},
 		"buttons": {
 			"cancel": "Cancel",

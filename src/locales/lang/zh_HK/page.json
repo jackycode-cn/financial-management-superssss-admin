@@ -60,5 +60,6 @@
 	"articleModal.fields.externalAuthorPlaceholder": "輸入外部作者名稱",
 	"articleModal.fields.seoTitlePlaceholder": "搜索引擎顯示的標題",
 	"articleModal.fields.descriptionTip": "改進文章的信息",
-	"articleModal.fields.tags": "文章標籤"
+	"articleModal.fields.tags": "文章標籤",
+	"articleModal.fields.description-tip": "完善文章信息"
 }
