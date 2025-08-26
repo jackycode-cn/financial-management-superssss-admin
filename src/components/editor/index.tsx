@@ -4,8 +4,10 @@ import ReactQuill from "react-quill-new";
 
 import { useEffect, useMemo, useRef } from "react";
 import { exportPdf } from "./exportPDF";
+import { imageHandler, uploadAndInsertImage } from "./image-upload-handle";
 import { StyledEditor } from "./styles";
 import Toolbar, { formats } from "./toolbar";
+import { useQuillPasteImageBlock } from "./useQuillPasteImageBlock";
 
 // TODO: repace react-quill with tiptap
 interface Props extends ReactQuill.ReactQuillProps {
@@ -26,6 +28,11 @@ export default function Editor({ id = "slash-quill", sample = false, ...other }:
 						exportPdf(htmlEle).then((pdf) => {
 							pdf.save();
 						});
+					},
+					image: () => {
+						if (quillRef.current) {
+							imageHandler(quillRef.current.getEditor());
+						}
 					},
 				},
 			},
@@ -53,6 +60,12 @@ export default function Editor({ id = "slash-quill", sample = false, ...other }:
 			};
 		}
 	}, [id]);
+	useQuillPasteImageBlock(quillRef, async (files, quill) => {
+		for (const file of files) {
+			await uploadAndInsertImage(quill, file, 2);
+		}
+	});
+
 	return (
 		<StyledEditor>
 			<Toolbar id={id} isSimple={sample} />
