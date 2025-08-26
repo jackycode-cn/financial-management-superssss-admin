@@ -1,4 +1,5 @@
 import useLocale from "@/locales/use-locale";
+import { memo } from "react";
 import PDFButton from "./pdf-button";
 import { StyledToolbar } from "./styles";
 
@@ -42,7 +43,7 @@ type EditorToolbarProps = {
 	isSimple?: boolean;
 };
 
-export default function Toolbar({ id, isSimple }: EditorToolbarProps) {
+function Toolbar({ id, isSimple }: EditorToolbarProps) {
 	const { t } = useLocale();
 	return (
 		<StyledToolbar>
@@ -119,3 +120,5 @@ export default function Toolbar({ id, isSimple }: EditorToolbarProps) {
 		</StyledToolbar>
 	);
 }
+
+export default memo(Toolbar);

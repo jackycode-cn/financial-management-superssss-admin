@@ -1,4 +1,5 @@
 import { FileTextIcon } from "lucide-react";
+import { memo } from "react";
 
 function PDFButton() {
 	return (
@@ -7,5 +8,4 @@ function PDFButton() {
 		</div>
 	);
 }
-
-export default PDFButton;
+export default memo(PDFButton);
