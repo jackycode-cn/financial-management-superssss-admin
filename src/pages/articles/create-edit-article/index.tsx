@@ -1,13 +1,16 @@
 import { reqArticlecreate, reqArticlefindone, reqArticleupdate } from "@/api/services";
 import Editor from "@/components/editor";
+import PreviewContent from "@/components/editor/preview/preview-content";
 import { useArticleCategories } from "@/hooks/use-article-categories";
 import { useParams } from "@/routes/hooks";
 import type { CreateArticleDto } from "@/types";
 import { Button } from "@/ui/button";
 import { Card } from "@/ui/card";
 import { htmlToText } from "@/utils/htmlToText";
+import { Modal } from "antd";
+import { ShieldCloseIcon } from "lucide-react";
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -117,6 +120,13 @@ const CreateArticle: React.FC<CreateArticleProps> = ({ title }) => {
 		}
 	}, [articleId, isEditMode, navigate, t]);
 
+	const [isShowPreview, setShowPreview] = useState(false);
+	const handleClosePreview = useCallback(() => {
+		setShowPreview(false);
+	}, []);
+	const handleShowPreview = useCallback(() => {
+		setShowPreview(true);
+	}, []);
 	return (
 		<Card>
 			<div className="createArticle-container w-full  mx-auto p-4 relative">
@@ -136,8 +146,15 @@ const CreateArticle: React.FC<CreateArticleProps> = ({ title }) => {
 					className="w-full max-h-[65vh] border border-gray-300 rounded"
 				/>
 				{/* 提交按钮 */}
-				<div className="mt-4 flex justify-end">
-					<Button variant="ghost" className="bg-success!" onClick={handleSubmit}>
+				<div className="mt-4 flex justify-end gap-6">
+					<Button
+						variant="destructive"
+						className="bg-amber-500 text-white hover:bg-amber-700"
+						onClick={handleShowPreview}
+					>
+						預覽
+					</Button>
+					<Button variant="ghost" className="bg-success! text-success-foreground" onClick={handleSubmit}>
 						{t("articlePage.submitButton")}
 					</Button>
 				</div>
@@ -152,6 +169,33 @@ const CreateArticle: React.FC<CreateArticleProps> = ({ title }) => {
 				onCancel={handleCancel}
 				onSubmit={handleSubmitCreateOrEdit}
 			/>
+			<Modal
+				width={986}
+				open={isShowPreview}
+				closable={false}
+				onCancel={handleClosePreview}
+				footer={null}
+				modalRender={(node) => (
+					<div className="relative">
+						<button
+							type="button"
+							className="
+							absolute right-4 -top-10
+							flex items-center justify-center
+							w-8 h-8
+							rounded-full
+							bg-black/50 text-white
+
+						"
+						>
+							<ShieldCloseIcon />
+						</button>
+						{node}
+					</div>
+				)}
+			>
+				<PreviewContent content={quillFull} />
+			</Modal>
 		</Card>
 	);
 };

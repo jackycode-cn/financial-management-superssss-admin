@@ -1,0 +1,107 @@
+/* 局部容器类：所有文章内容都放在这里 */
+.articleContainer {
+    overflow: hidden;
+    position: relative;
+    border-radius: 8px;
+    border: 1px solid rgba(145, 158, 171, 0.2);
+    font-size: 16px !important;
+    /* 局部加粗，覆盖全局 strong */
+    & strong {
+        font-weight: 700 !important;
+    }
+
+    /* 局部强调，避免全局 em、b 样式污染 */
+    & em {
+        font-style: italic !important;
+    }
+}
+
+/* 局部标题 */
+.articleContainer h1 {
+    font-size: 1.2em !important;
+    line-height: 1.25;
+    font-weight: 800 !important;
+    margin: 1rem 0;
+}
+
+.articleContainer h2 {
+    font-size: 1.5em !important;
+    line-height: 1.25;
+    font-weight: 800 !important;
+    margin: 1rem 0;
+}
+
+.articleContainer h3 {
+    font-size: 1.25em !important;
+    line-height: 1.25;
+    font-weight: 700 !important;
+    margin: 1rem 0;
+}
+
+.articleContainer h4 {
+    font-size: 1.1em !important;
+    line-height: 1.25;
+    font-weight: 700 !important;
+    margin: 1rem 0;
+}
+
+.articleContainer h5 {
+    font-size: 1em !important;
+    line-height: 1.25;
+    font-weight: 700 !important;
+    margin: 1rem 0;
+}
+
+.articleContainer h6 {
+    font-size: 0.9em !important;
+    line-height: 1.25;
+    font-weight: 600 !important;
+    margin: 1rem 0;
+}
+
+/* 图片局部样式 */
+.articleContainer img {
+    display: inline;
+    max-width: 100%;
+    height: auto;
+
+}
+
+/* Quill 容器 */
+.articleContainer .ql-container.ql-snow {
+    border: none;
+    line-height: 1.6;
+    font-weight: 400;
+    font-size: 0.875rem;
+}
+
+/* Quill 编辑器内容 */
+.articleContainer .ql-editor {
+    min-height: 160px;
+    max-height: 640px;
+    background-color: rgba(145, 158, 171, 0.08);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.6;
+    font-family: "Public Sans", sans-serif;
+}
+
+/* Quill 占位符 */
+.articleContainer .ql-editor.ql-blank::before {
+    font-style: normal;
+    color: #6e6e6e;
+}
+
+/* Quill 代码块 */
+.articleContainer pre.ql-syntax {
+    border-radius: 8px;
+    line-height: 1.57;
+    font-size: 0.875rem;
+    font-family: "Public Sans", sans-serif;
+    font-weight: 400;
+    padding: 16px;
+    background-color: #f4f4f4;
+    overflow-x: auto;
+}
+
+
