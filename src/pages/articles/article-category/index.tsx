@@ -1,4 +1,4 @@
-import { Button, Typography, message } from "antd";
+import { Button, Grid, Typography, message } from "antd";
 import { useState } from "react";
 
 import { reqArticlecategoryremove } from "@/api/services/ArticleCategory";
@@ -15,6 +15,7 @@ export interface ArticleCategoryProps {
 	/** 示例：组件标题 */
 	title?: string;
 }
+const { useBreakpoint } = Grid;
 
 function ArticleCategory({ title }: ArticleCategoryProps) {
 	const [loading, setLoading] = useState<boolean>(false);
@@ -25,6 +26,8 @@ function ArticleCategory({ title }: ArticleCategoryProps) {
 
 	const [categoriesOption, _setCategoriesOption, fetchCategories, _pagination, categories, _setCategories] =
 		useArticleCategories();
+	const breakpoints = useBreakpoint();
+	const isMobile = breakpoints.xs;
 
 	const handleSubmit = async () => {
 		setVisible(false);
@@ -51,13 +54,15 @@ function ArticleCategory({ title }: ArticleCategoryProps) {
 
 	return (
 		<div className="article-category-container">
-			<div className="flex justify-between items-center">
-				<Title level={3}>{title ?? "文章分類"}</Title>
+			<div className={`flex ${isMobile ? "flex-col gap-2" : "justify-between items-center"}`}>
+				<Title level={3} style={{ marginBottom: 0 }}>
+					{title ?? "文章分類"}
+				</Title>
 				<Button
 					icon={<PlusIcon />}
 					type="primary"
 					shape="round"
-					size="large"
+					size={isMobile ? "middle" : "large"}
 					onClick={() => {
 						setEditingCategory(null);
 						setVisible(true);
@@ -75,6 +80,7 @@ function ArticleCategory({ title }: ArticleCategoryProps) {
 					setEditingCategory(record);
 					setVisible(true);
 				}}
+				isMobile={isMobile}
 				onDelete={(id) => {
 					setCategoryToDelete(id);
 					setDeleteModalVisible(true);

@@ -11,9 +11,10 @@ interface CategoryTableProps {
 	onEdit: (record: CategoryResponseDto) => void;
 	onDelete: (id: number) => void;
 	categoryOptions: Category[];
+	isMobile?: boolean;
 }
 
-const CategoryTable = ({ dataSource, loading, onEdit, onDelete, categoryOptions }: CategoryTableProps) => {
+const CategoryTable = ({ dataSource, loading, onEdit, onDelete, categoryOptions, isMobile }: CategoryTableProps) => {
 	const columns: ColumnsType<CategoryResponseDto> = [
 		{
 			title: "分類名稱",
@@ -61,12 +62,13 @@ const CategoryTable = ({ dataSource, loading, onEdit, onDelete, categoryOptions 
 		{
 			title: "操作",
 			key: "action",
+			fixed: isMobile ? undefined : "right",
 			render: (_: any, record: CategoryResponseDto) => (
-				<Space size="small">
-					<Button type="text" icon={<EditIcon />} onClick={() => onEdit(record)}>
+				<Space size={isMobile ? 0 : "small"} direction={isMobile ? "vertical" : "horizontal"}>
+					<Button type="primary" size="small" icon={<EditIcon size={16} />} onClick={() => onEdit(record)}>
 						編輯
 					</Button>
-					<Button type="text" danger icon={<DeleteIcon />} onClick={() => onDelete(record.id)}>
+					<Button danger size="small" icon={<DeleteIcon size={16} />} onClick={() => onDelete(record.id)}>
 						刪除
 					</Button>
 				</Space>
@@ -80,7 +82,9 @@ const CategoryTable = ({ dataSource, loading, onEdit, onDelete, categoryOptions 
 			dataSource={dataSource.map((item) => ({ ...item, key: item.id }))}
 			loading={loading}
 			pagination={{ pageSize: 10 }}
+			scroll={{ x: "max-content" }}
 			rowKey="id"
+			size={isMobile ? "small" : "middle"}
 		/>
 	);
 };
