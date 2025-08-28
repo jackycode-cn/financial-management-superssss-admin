@@ -51,9 +51,13 @@ const ArticleList: React.FC = () => {
 				const response: ArticlesEntities = await reqArticlefindall(params);
 				setArticles(response.items || []);
 				setPagination((prev) => ({ ...prev, total: response.pagination?.total || 0 }));
-				toast.success("文章清單載入成功");
+				toast.success("文章清單載入成功", {
+					position: "top-center",
+				});
 			} catch (error) {
-				toast.error("文章清單載入失敗");
+				toast.error("文章清單載入失敗", {
+					position: "top-center",
+				});
 				console.error("Failed to fetch articles:", error);
 			} finally {
 				setLoading(false);
@@ -204,6 +208,8 @@ const ArticleList: React.FC = () => {
 		{
 			title: "操作",
 			key: "action",
+			width: 120,
+			fixed: "right" as const,
 			render: (_: any, record: ArticleEntity) => (
 				<Space size="middle">
 					<Button variant="link" onClick={() => handleEdit(record)} className="cursor-pointer">
@@ -221,9 +227,9 @@ const ArticleList: React.FC = () => {
 
 	return (
 		<div className="article-list-container">
-			<div className="article-list-header flex justify-between mb-2">
+			<div className="article-list-header flex flex-col md:flex-row md:justify-between gap-2 mb-2">
 				{/* 篩選項目 */}
-				<Space>
+				<Space wrap className="flex-1">
 					<StatusFilterSelect
 						label="發布狀態"
 						value={statusMapFilter.is_published}
@@ -253,26 +259,27 @@ const ArticleList: React.FC = () => {
 						onChange={(v) => handleChangeStatusMapFilter("is_featured", v)}
 					/>
 				</Space>
-				<Space>
+				<Space wrap className="flex-1 md:justify-end">
 					<Input
 						placeholder="輸入文章標題搜尋"
 						value={searchText}
 						onChange={(e) => setSearchText(e.target.value)}
-						style={{ width: 200 }}
+						style={{ width: "100%", maxWidth: 200 }}
+						allowClear
 						onPressEnter={handleSearch}
 					/>
 					<Button type="button" onClick={handleSearch}>
 						搜尋
 					</Button>
+					<Button type="button" onClick={handleAdd}>
+						新增文章
+					</Button>
 				</Space>
-
-				<Button type="button" onClick={handleAdd}>
-					新增文章
-				</Button>
 			</div>
 
 			<Table
 				columns={columns}
+				scroll={{ x: "max-content" }}
 				dataSource={articles.map((article) => ({ ...article, key: article.id }))}
 				loading={loading}
 				pagination={pagination}
