@@ -836,6 +836,7 @@ export interface RoleOneEntity {
 	editor?: number | null;
 
 	deleted: boolean;
+	isSystem?: boolean;
 }
 
 export interface RolePermissionCodes {

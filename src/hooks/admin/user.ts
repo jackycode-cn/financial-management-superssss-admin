@@ -1,11 +1,12 @@
 import { reqUserfindall } from "@/api/services";
 import type { Requserfindallquery, UserEntity } from "@/types";
 import { printError } from "@/utils/printError";
-import { type TablePaginationConfig, message } from "antd";
+import type { TablePaginationConfig } from "antd";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import { omitBy } from "lodash";
 import { useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export type FilterParamsType = {
 	createTimeRange?: [Dayjs, Dayjs];
@@ -65,11 +66,14 @@ export function useUserList(defaultPageSize = 8, autoLoad = true) {
 			setLoading(true);
 			try {
 				setFilterParams((prev) => (isRefresh ? prev : params));
-				const filterInfo = getQueryParams(params);
+				let filterInfo = getQueryParams(params);
 
 				if (isRefresh) {
-					filterInfo.page = pagination.current;
-					filterInfo.pageSize = pagination.pageSize;
+					filterInfo = {
+						...filterInfo,
+						page: params.page ?? pagination.current,
+						pageSize: params.pageSize ?? pagination.pageSize,
+					};
 				}
 
 				const res = await reqUserfindall(filterInfo);
@@ -82,7 +86,7 @@ export function useUserList(defaultPageSize = 8, autoLoad = true) {
 				});
 
 				if (!isRefresh) {
-					message.success("用戶數據加載成功");
+					toast.success("用戶數據加載成功");
 				}
 			} catch (error: any) {
 				printError(error, "用戶數據加載出錯");
@@ -96,17 +100,21 @@ export function useUserList(defaultPageSize = 8, autoLoad = true) {
 
 	const changePagination = useCallback(
 		(newPagination: TablePaginationConfig) => {
-			setPagination((prev) => ({
-				...prev,
+			const updatedPagination = {
 				current: newPagination.current || 1,
 				pageSize: newPagination.pageSize || defaultPageSize,
+			};
+
+			setPagination((prev) => ({
+				...prev,
+				...updatedPagination,
 			}));
 
 			loadUsers(
 				{
 					...filterParams,
-					page: newPagination.current ?? 1,
-					pageSize: newPagination.pageSize ?? defaultPageSize,
+					page: updatedPagination.current,
+					pageSize: updatedPagination.pageSize,
 				},
 				true,
 			);
@@ -114,11 +122,12 @@ export function useUserList(defaultPageSize = 8, autoLoad = true) {
 		[filterParams, loadUsers, defaultPageSize],
 	);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		if (autoLoad) {
 			loadUsers();
 		}
-	}, [autoLoad, loadUsers]);
+	}, []);
 
 	return {
 		users,

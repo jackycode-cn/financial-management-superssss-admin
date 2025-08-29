@@ -8,10 +8,11 @@ interface Props {
 	value?: string;
 	onChange?: (val: string) => void;
 	disabled?: boolean;
+	defaultMode?: "url" | "upload";
 }
 
-export function UploadThumbnailWithMode({ value = "", onChange, disabled }: Props) {
-	const [mode, setMode] = useState<"url" | "upload">(value ? "url" : "upload");
+export function UploadThumbnailWithMode({ value, onChange, disabled, defaultMode = "url" }: Props) {
+	const [mode, setMode] = useState<"url" | "upload">(defaultMode);
 	const [thumbnail, setThumbnail] = useState(value);
 	const accessToken = useUserToken().accessToken;
 	const handleModeChange = (e: any) => {
@@ -52,6 +53,7 @@ export function UploadThumbnailWithMode({ value = "", onChange, disabled }: Prop
 					headers={{
 						Authorization: `Bearer ${accessToken}`,
 					}}
+					defaultUrl={value}
 					name="file"
 					className="w-full"
 					onSuccess={handleSuccessUpload}
