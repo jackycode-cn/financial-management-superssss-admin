@@ -1,4 +1,4 @@
-import { reqPermissioncreate, reqPermissionupdate } from "@/api/services";
+import { reqPermissioncreate, reqPermissionremove, reqPermissionupdate } from "@/api/services";
 import { Icon } from "@/components/icon";
 import { useUserPermissionData } from "@/hooks/admin/permission";
 import type { CreatePermissionDto, PermissionOneEntity } from "@/types/api/output";
@@ -85,7 +85,7 @@ export default function PermissionPage() {
 						<Icon icon="solar:pen-bold-duotone" size={18} />
 					</Button>
 					<Button variant="ghost" size="icon">
-						<Icon icon="mingcute:delete-2-fill" size={18} className="text-error!" />
+						<Icon icon="mingcute:delete-2-fill" size={18} className="text-error!" onClick={() => onDelete(record.id)} />
 					</Button>
 				</div>
 			),
@@ -145,6 +145,11 @@ export default function PermissionPage() {
 				setPermissionModalProps((prev) => ({ ...prev, show: false }));
 			},
 		}));
+	};
+	const onDelete = async (id: number) => {
+		await reqPermissionremove(String(id));
+		toast.success("刪除權限成功");
+		loadData();
 	};
 	return (
 		<Card>

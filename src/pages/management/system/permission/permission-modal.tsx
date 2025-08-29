@@ -239,7 +239,7 @@ export function PermissionModal({
 						/>
 
 						<DialogFooter>
-							<Button variant="outline" onClick={onCancel}>
+							<Button type="button" variant="outline" onClick={onCancel}>
 								取消
 							</Button>
 							<Button type="submit" variant="default">
