@@ -45,3 +45,4 @@ export function useLoadRoleData(pagn: TablePaginationConfig = { pageSize: 2000 }
 		loadData,
 	};
 }
+export type UserRolesReturn = ReturnType<typeof useLoadRoleData>;
