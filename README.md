@@ -38,6 +38,12 @@ npm install
 npm run dev
 ```
 
+`pnpm`安裝啟動建議
+```bash
+pnpm install
+pnpm dev
+```
+
 服务启动后，在浏览器中访问 `http://localhost:3001` 即可查看項目界面。
 
 
