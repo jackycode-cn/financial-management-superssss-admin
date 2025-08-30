@@ -2,7 +2,7 @@ import type { CreateUserWithAccountDto, RoleListEntity, UpdateUserDto } from "#/
 import { reqRolefindall } from "@/api/services/RoleManagement";
 import { reqUsercreateuser, reqUserremove, reqUserupdate } from "@/api/services/UserManagement";
 import { Icon } from "@/components/icon";
-import { useUserList } from "@/hooks/admin/user";
+import { type FilterParamsType, useUserList } from "@/hooks/admin/user";
 import { usePathname, useRouter } from "@/routes/hooks";
 import type { UserEntity, UserRoleInfoEntity } from "@/types";
 import { Badge } from "@/ui/badge";
@@ -11,19 +11,19 @@ import { Card, CardContent, CardHeader } from "@/ui/card";
 import { Popconfirm, Table, message } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
+import UserFilterForm, { type UserFilterParams } from "./user-filter";
 import UserModal from "./user-modal";
 
 export default function UserPage() {
 	const { push } = useRouter();
 	const pathname = usePathname();
-	const { users, pagination, loading, changePagination } = useUserList(10);
+	const { users, pagination, loading, changePagination, loadUsers } = useUserList(10);
 
 	const [modalVisible, setModalVisible] = useState(false);
 	const [editingUser, setEditingUser] = useState<UserEntity | null>(null);
 	const [roles, setRoles] = useState<UserRoleInfoEntity[]>([]);
-
 	useEffect(() => {
 		const fetchRoles = async () => {
 			try {
@@ -165,13 +165,27 @@ export default function UserPage() {
 		},
 	];
 
+	const handleSearchOrzReset = useCallback(
+		(values: UserFilterParams) => {
+			loadUsers(values as FilterParamsType);
+		},
+		[loadUsers],
+	);
 	return (
 		<>
 			<Card>
 				<CardHeader>
-					<div className="flex items-center justify-between">
-						<div>用戶列表</div>
-						<Button onClick={handleCreateUser}>新增用戶</Button>
+					<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-4 mb-4">
+						<div className="text-lg font-semibold">用户列表</div>
+
+						<div className="flex-1 md:mx-4">
+							<UserFilterForm onSearch={handleSearchOrzReset} onReset={handleSearchOrzReset} />
+						</div>
+
+						{/* 新增按钮 */}
+						<div className="flex justify-end md:justify-start">
+							<Button onClick={handleCreateUser}>新增用户</Button>
+						</div>
 					</div>
 				</CardHeader>
 				<CardContent>

@@ -1,0 +1,13 @@
+@media (max-width: 768px) {
+  .ant-picker-popup-mobile {
+    transform: scale(0.2);
+    transform-origin: top top;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translateX(-50%) scale(0.7);
+  }
+
+  .ant-picker-input-active {
+    width: 100%;
+  }
+}
