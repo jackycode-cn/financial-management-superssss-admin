@@ -46,7 +46,7 @@
 	"articleModal.fields.slugPlaceholder": "输入对URL友好的标识符",
 	"articleModal.fields.thumbnailPlaceholder": "输入缩略图网址或上传图像",
 	"articleModal.fields.seoKeywords": "SEO关键字",
-	"articleModal.fields.slug": "文章sl",
+	"articleModal.fields.slug": "文章slug",
 	"articleModal.validation.descriptionMax": "描述不能超过200个字符",
 	"articleModal.validation.invalidUrl": "请输入有效的URL",
 	"articleModal.fields.seoTitlePlaceholder": "搜索引擎显示的标题",

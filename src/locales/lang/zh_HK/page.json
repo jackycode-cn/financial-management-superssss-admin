@@ -45,7 +45,7 @@
 	"articleModal.fields.externalArticleDesc": "鏈接到外部文章而不是內部內容",
 	"articleModal.fields.seoKeywordsPlaceholder": "帶有逗號的單獨關鍵字",
 	"articleModal.fields.seoTitle": "SEO標題",
-	"articleModal.fields.slug": "文章sl",
+	"articleModal.fields.slug": "文章slug",
 	"articleModal.fields.slugPlaceholder": "輸入對URL友好的標識符",
 	"articleModal.fields.thumbnail": "文章縮略圖",
 	"articleModal.fields.externalAuthor": "外部文章作者",
