@@ -65,40 +65,40 @@ const UserFilterForm: React.FC<UserFilterFormProps> = ({ value, onChange, onSear
 				gap: 8,
 			}}
 		>
-			<Form.Item label="账号状态" name="deleted">
-				<Select allowClear>
+			<Form.Item label="帳號狀態" name="deleted" className="w-[200px]">
+				<Select allowClear className="w-full">
 					<Select.Option value={""}>全部</Select.Option>
 					<Select.Option value={0}>正常</Select.Option>
-					<Select.Option value={1}>已删除</Select.Option>
+					<Select.Option value={1}>已刪除</Select.Option>
 				</Select>
 			</Form.Item>
 
-			<Form.Item label="禁用状态" name="disabled">
-				<Select allowClear>
+			<Form.Item label="停用狀態" name="disabled" className="w-[200px]">
+				<Select allowClear className="w-full">
 					<Select.Option value={""}>全部</Select.Option>
-					<Select.Option value={1}>已禁用</Select.Option>
+					<Select.Option value={1}>已停用</Select.Option>
 					<Select.Option value={0}>正常</Select.Option>
 				</Select>
 			</Form.Item>
 
-			<Form.Item label="账号" name="account">
-				<Input placeholder="输入账号" />
+			<Form.Item label="帳號" name="account">
+				<Input placeholder="輸入帳號" />
 			</Form.Item>
 
-			<Form.Item label="用户名" name="name">
-				<Input placeholder="输入用户名" />
+			<Form.Item label="使用者名稱" name="name">
+				<Input placeholder="輸入使用者名稱" />
 			</Form.Item>
 
-			<Form.Item label="邮箱" name="email">
-				<Input placeholder="输入邮箱" />
+			<Form.Item label="信箱" name="email">
+				<Input placeholder="輸入信箱" />
 			</Form.Item>
 
-			<Form.Item label="手机号" name="mobile">
-				<Input placeholder="输入手机号" />
+			<Form.Item label="手機號碼" name="mobile">
+				<Input placeholder="輸入手機號碼" />
 			</Form.Item>
 
 			<Form.Item
-				label="创建时间"
+				label="建立時間"
 				name="createTimeRange"
 				style={{
 					minWidth: 200,
@@ -118,7 +118,7 @@ const UserFilterForm: React.FC<UserFilterFormProps> = ({ value, onChange, onSear
 
 			<Form.Item style={{ flex: "1 1 100%", display: "flex", gap: 8, flexWrap: "wrap" }}>
 				<Button type="primary" onClick={handleSearch}>
-					搜索
+					搜尋
 				</Button>
 				<Button onClick={handleReset}>重置</Button>
 			</Form.Item>
