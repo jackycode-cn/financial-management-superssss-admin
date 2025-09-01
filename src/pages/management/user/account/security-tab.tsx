@@ -1,28 +1,34 @@
+import { reqUserupdatepassword } from "@/api/services";
+import { useUserInfo } from "@/store/userStore";
+import type { UpdatePasswordDto } from "@/types";
 import { Button } from "@/ui/button";
 import { Card, CardContent } from "@/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/ui/form";
 import { Input } from "@/ui/input";
+import { printError } from "@/utils/printError";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-type FieldType = {
-	oldPassword: string;
-	newPassword: string;
-	confirmPassword: string;
-};
-
 export default function SecurityTab() {
-	const form = useForm<FieldType>({
-		defaultValues: {
-			oldPassword: "",
-			newPassword: "",
-			confirmPassword: "",
-		},
+	const initialValue: UpdatePasswordDto = {
+		oldPassword: "",
+		password: "",
+		confirmPassword: "",
+		account: useUserInfo().account || "",
+	};
+	const form = useForm<UpdatePasswordDto>({
+		defaultValues: initialValue,
 	});
 
-	const handleSubmit = () => {
-		// Handle form submission here
-		toast.success("Update success!");
+	const handleSubmit = (values: UpdatePasswordDto) => {
+		reqUserupdatepassword(values)
+			.then(() => {
+				toast.success("密碼變更成功！");
+				form.reset();
+			})
+			.catch((err) => {
+				printError(err, "密碼變更失敗");
+			});
 	};
 
 	return (
@@ -33,10 +39,10 @@ export default function SecurityTab() {
 						<FormField
 							control={form.control}
 							name="oldPassword"
-							rules={{ required: "Old password is required" }}
+							rules={{ required: "原密碼是必須的" }}
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Old Password</FormLabel>
+									<FormLabel>原密碼</FormLabel>
 									<FormControl>
 										<Input type="password" {...field} />
 									</FormControl>
@@ -47,11 +53,11 @@ export default function SecurityTab() {
 
 						<FormField
 							control={form.control}
-							name="newPassword"
-							rules={{ required: "New password is required" }}
+							name="password"
+							rules={{ required: "新密碼是必須的" }}
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>New Password</FormLabel>
+									<FormLabel>新密碼</FormLabel>
 									<FormControl>
 										<Input type="password" {...field} />
 									</FormControl>
@@ -64,14 +70,14 @@ export default function SecurityTab() {
 							control={form.control}
 							name="confirmPassword"
 							rules={{
-								required: "Please confirm your new password",
-								validate: (value) => value === form.getValues("newPassword") || "Passwords do not match",
+								required: "請輸入確認密碼",
+								validate: (value) => value === form.getValues("password") || "密碼不匹配",
 							}}
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Confirm New Password</FormLabel>
+									<FormLabel>確認密碼</FormLabel>
 									<FormControl>
-										<Input type="password" {...field} />
+										<Input type="password" {...field} minLength={10} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -79,7 +85,7 @@ export default function SecurityTab() {
 						/>
 
 						<div className="flex w-full justify-end">
-							<Button type="submit">Save Changes</Button>
+							<Button type="submit">保存密碼變更</Button>
 						</div>
 					</form>
 				</Form>
