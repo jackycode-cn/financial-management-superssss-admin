@@ -70,7 +70,7 @@ export function UploadThumbnail({
 	);
 
 	return (
-		<StyledUpload $thumbnail={true}>
+		<StyledUpload $thumbnail={true} className="flex items-center flex-col justify-center">
 			<Upload
 				name="thumbnail"
 				showUploadList={false}

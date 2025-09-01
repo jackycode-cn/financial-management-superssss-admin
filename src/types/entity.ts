@@ -1,4 +1,5 @@
 import type { NavItemDataProps } from "@/components/nav/types";
+import type { UserEntity } from "./api";
 import type { BasicStatus, PermissionType } from "./enum";
 
 export interface UserToken {
@@ -18,6 +19,10 @@ export interface UserInfo {
 	status?: BasicStatus;
 	permissions?: Permission[];
 	menu?: MenuTree[];
+	address?: string;
+	mobile?: string;
+	account?: string;
+	role?: UserEntity["role"];
 }
 
 export interface Permission_Old {

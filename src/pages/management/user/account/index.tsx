@@ -11,19 +11,19 @@ function UserAccount() {
 				<TabsTrigger value="1">
 					<div className="flex items-center">
 						<Icon icon="solar:user-id-bold" size={24} className="mr-2" />
-						<span>General</span>
+						<span>常規</span>
 					</div>
 				</TabsTrigger>
 				<TabsTrigger value="2">
 					<div className="flex items-center">
 						<Icon icon="solar:bell-bing-bold-duotone" size={24} className="mr-2" />
-						<span>Notifications</span>
+						<span>通知</span>
 					</div>
 				</TabsTrigger>
 				<TabsTrigger value="3">
 					<div className="flex items-center">
 						<Icon icon="solar:key-minimalistic-square-3-bold-duotone" size={24} className="mr-2" />
-						<span>Security</span>
+						<span>安全</span>
 					</div>
 				</TabsTrigger>
 			</TabsList>

@@ -109,3 +109,8 @@ export async function reqUsergetroles(id: string): Promise<RoleOneEntity[]> {
 export async function reqUsergetpermissions(): Promise<RolePermissionCodes> {
 	return await apiClient.get("/api/user/get-permissions");
 }
+
+/** 用戶自己更新用戶信息 */
+export async function reqUserupdateOwnprofile(data: UpdateUserDto): Promise<UserEntity> {
+	return await apiClient.post("/api/user/self/update", data);
+}

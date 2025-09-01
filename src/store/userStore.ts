@@ -65,7 +65,11 @@ export const useSignIn = () => {
 
 			const { userInfo, accessToken, refreshToken } = res;
 			setUserToken({ accessToken, refreshToken });
-			setUserInfo({ ...userInfo, id: userInfo.userId, email: userInfo.account });
+			setUserInfo({
+				...userInfo,
+				id: userInfo.userId,
+				email: userInfo.account,
+			});
 		} catch (err) {
 			toast.error(err.message, {
 				position: "top-center",
@@ -82,12 +86,16 @@ export function useRequestUserInfo() {
 	const { setUserInfo } = useUserActions();
 	const requestUserInfo = async () => {
 		try {
-			const { userName, email, headImgUrl, userId } = await reqUsergetownprofile();
+			const { userName, email, headImgUrl, userId, account, mobile, address, role } = await reqUsergetownprofile();
 			setUserInfo({
 				username: userName,
 				email,
 				avatar: headImgUrl,
 				id: userId,
+				account,
+				address,
+				mobile,
+				role,
 			});
 		} catch (err) {
 			toast.error(err.message, {
