@@ -1,8 +1,13 @@
 import type { RouteObject } from "react-router";
 import { Navigate } from "react-router";
 import { Component } from "./utils";
+interface MenuMeta {
+	accessCodes?: string[];
+}
 
-export const frontendDashboardRoutes: RouteObject[] = [
+export type RouteObjectWithMeta = RouteObject & { meta?: MenuMeta; children?: RouteObjectWithMeta[] };
+
+export const frontendDashboardRoutes: RouteObjectWithMeta[] = [
 	{ path: "workbench", element: Component("/pages/dashboard/workbench") },
 	{ path: "analysis", element: Component("/pages/dashboard/analysis") },
 	{
@@ -47,6 +52,9 @@ export const frontendDashboardRoutes: RouteObject[] = [
 					{ path: "user", element: Component("/pages/management/system/user") },
 					{ path: "user/:id", element: Component("/pages/management/system/user/detail") },
 				],
+				meta: {
+					accessCodes: ["menu:admin"],
+				},
 			},
 		],
 	},
