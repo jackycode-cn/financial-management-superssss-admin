@@ -66,10 +66,6 @@ const filterNavData = (permissions: string[]) => {
  */
 export const useFilteredNavData = () => {
 	const permissionCodes = usePermissions();
-	console.log("permissionCodes", permissionCodes);
-
 	const filteredNavData = useMemo(() => filterNavData(permissionCodes), [permissionCodes]);
-	console.log("filteredNavData", filteredNavData);
-
 	return filteredNavData;
 };
