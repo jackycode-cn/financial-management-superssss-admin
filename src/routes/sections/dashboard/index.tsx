@@ -9,7 +9,10 @@ import { type RouteObjectWithMeta, frontendDashboardRoutes } from "./frontend";
 
 const getRoutes = async (): Promise<RouteObjectWithMeta[]> => {
 	// 获取所有的权限
-	const accessCodes = await reqUsergetpermissions();
+	const accessCodes = await reqUsergetpermissions().catch(() => ({
+		buttonPermissions: [],
+		menuPermissions: [],
+	}));
 	// userStore.actions;
 
 	const permissionCodes = [...accessCodes.buttonPermissions, ...accessCodes.menuPermissions];
