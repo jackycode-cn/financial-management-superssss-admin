@@ -1,3 +1,5 @@
+import type { PermissionCode } from "@/auth/permission-code";
+
 export type NavItemOptionsProps = {
 	depth?: number;
 	hasChild?: boolean;
@@ -16,7 +18,7 @@ export type NavItemDataProps = {
 	icon?: string | React.ReactNode;
 	info?: React.ReactNode;
 	caption?: string;
-	auth?: string[];
+	auth?: PermissionCode[];
 	children?: NavItemDataProps[];
 } & NavItemStateProps;
 

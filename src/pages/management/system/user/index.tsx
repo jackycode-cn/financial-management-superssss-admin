@@ -221,6 +221,7 @@ export default function UserPage() {
 								birthday: editingUser.birthday ? dayjs(editingUser.birthday) : undefined,
 								address: editingUser.address,
 								companyName: editingUser.companyName,
+								disabled: editingUser.disabled,
 							}
 						: undefined
 				}

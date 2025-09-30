@@ -44,6 +44,7 @@ export const frontendNavData: NavProps["data"] = [
 					{
 						title: "sys.nav.system.index",
 						path: "/management/system",
+						auth: ["menu:admin"],
 						children: [
 							{
 								title: "sys.nav.system.permission",
@@ -74,14 +75,17 @@ export const frontendNavData: NavProps["data"] = [
 					{
 						title: "dashboard.nav.article.list",
 						path: "/articles/list",
+						auth: ["menu:article:view"],
 						icon: <Icon icon="stash:article-alt-duotone" size="24" />,
 					},
 					{
 						title: "dashboard.nav.article.category",
 						path: "/articles/category",
 						icon: <Icon icon="stash:article" size="24" />,
+						auth: ["menu:article:category"],
 					},
 				],
+				auth: ["menu:article"],
 			},
 			// menulevel
 			{
@@ -215,7 +219,7 @@ export const frontendNavData: NavProps["data"] = [
 				title: "sys.nav.permission.page_test",
 				path: "/permission/page-test",
 				icon: <Icon icon="mingcute:safe-lock-fill" size="24" />,
-				auth: ["permission:read"],
+				auth: ["menu:admin"],
 				hidden: true,
 			},
 			{

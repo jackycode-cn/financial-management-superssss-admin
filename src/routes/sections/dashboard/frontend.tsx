@@ -52,9 +52,6 @@ export const frontendDashboardRoutes: RouteObjectWithMeta[] = [
 					{ path: "user", element: Component("/pages/management/system/user") },
 					{ path: "user/:id", element: Component("/pages/management/system/user/detail") },
 				],
-				meta: {
-					accessCodes: ["menu:admin"],
-				},
 			},
 		],
 	},

@@ -42,6 +42,8 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
 			toast.success(t("sys.login.loginSuccessTitle"), {
 				closeButton: true,
 			});
+			// 重新整个刷新页面，避免权限问题
+			window.location.reload();
 		} finally {
 			setLoading(false);
 		}

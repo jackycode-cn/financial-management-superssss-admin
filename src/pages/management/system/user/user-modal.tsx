@@ -117,7 +117,7 @@ const UserModal: FC<UserModalProps> = ({ visible, onCancel, onOk, roles, initial
 					</Select>
 				</Form.Item>
 
-				<Form.Item name="state" label="啟用狀態" valuePropName="checked">
+				<Form.Item name="disabled" label="是否禁用" valuePropName="checked">
 					<Switch defaultChecked />
 				</Form.Item>
 
