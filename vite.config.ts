@@ -35,7 +35,7 @@ export default defineConfig(({ mode }) => {
 			port: 3001,
 			proxy: {
 				"/v1": {
-					target: "http://localhost:5000",
+					target: "http://113.90.151.147:11321",
 					changeOrigin: true,
 					rewrite: (path) => path.replace(/^\/v1/, ""),
 					secure: false,
