@@ -59,7 +59,7 @@ const StyledEditor = styled.div`
   /* 编辑器内容 */
   & .ql-editor {
     min-height: 160px;
-    max-height: 640px;
+    max-height: 65vh;
     background-color: rgba(145, 158, 171, 0.08);
 
     &.ql-blank::before {
@@ -77,8 +77,8 @@ const StyledEditor = styled.div`
       background-color: #f4f4f4; /* neutral 背景 */
     }
     & ol li:before {
-      content: '\\2022';   
-    }  
+      content: "\\2022";
+    }
   }
 `;
 
