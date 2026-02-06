@@ -272,4 +272,19 @@ export const frontendNavData: NavProps["data"] = [
 			},
 		],
 	},
+	{
+		name: "sys.nav.ads.index",
+		items: [
+			{
+				title: "sys.nav.ads.position",
+				path: "/ads/position",
+				icon: <Icon icon="local:ic-ads-position" size="24" />,
+			},
+			{
+				title: "sys.nav.ads.admin",
+				path: "/ads/admin",
+				icon: <Icon icon="local:ic-ads-admin" size="24" />,
+			},
+		],
+	},
 ];

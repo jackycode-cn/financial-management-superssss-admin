@@ -117,4 +117,18 @@ export const frontendDashboardRoutes: RouteObjectWithMeta[] = [
 			{ path: "category", element: Component("/pages/articles/article-category") },
 		],
 	},
+	{
+		path: "ads",
+		children: [
+			{ index: true, element: <Navigate to="admin" replace /> },
+			{ path: "position", element: Component("/pages/ads/ads.position") },
+			{
+				path: "admin",
+				children: [
+					{ index: true, element: <Navigate to="index" replace /> },
+					{ path: "index", element: Component("/pages/ads/ads-admin/index") },
+				],
+			},
+		],
+	},
 ];

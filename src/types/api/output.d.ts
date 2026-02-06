@@ -132,26 +132,6 @@ export interface QueueActionDto {
 	queueName: "chat" | "cron" | "email" | "audio";
 }
 
-export interface SwaggerErrorResponseDto {
-	success: boolean;
-	/**
-	 * 示例: 500
-	 */
-	code: number;
-	/**
-	 * 示例: "Internal server error"
-	 */
-	errorMessage: string;
-	/**
-	 * 示例: "2025/4/9 02:43:19"
-	 */
-	timestamp: string;
-	/**
-	 * 示例: {"username": ["用户名不能为空", "用户名长度不能超过20"]}
-	 */
-	errors?: { [key: string]: Array };
-}
-
 export interface SwaggerBaseResponse {
 	/**
 	 * 请求是否成功的标志
@@ -184,35 +164,24 @@ export interface SwaggerBaseResponse {
 	requestId?: string;
 }
 
-export interface UserDto {
+export interface SwaggerErrorResponseDto {
+	success: boolean;
 	/**
-	 * 示例: "1212121"
+	 * 示例: 500
 	 */
-	account: string;
+	code: number;
 	/**
-	 * 示例: "1212121"
+	 * 示例: "Internal server error"
 	 */
-	password: string;
-}
-
-export interface ExampleDto {
+	errorMessage: string;
 	/**
-	 * 示例
-	 * 示例: "示例"
+	 * 示例: "2025/4/9 02:43:19"
 	 */
-	example: string;
+	timestamp: string;
 	/**
-	 * 名称
-	 * 示例: "张三"
+	 * 示例: {"username": ["用户名不能为空", "用户名长度不能超过20"]}
 	 */
-	name?: string;
-	/**
-	 * 年龄
-	 * 示例: 18
-	 */
-	age?: number;
-
-	array?: number[];
+	errors?: { [key: string]: Array };
 }
 
 export interface RefreshTokenEntity {
@@ -222,11 +191,7 @@ export interface RefreshTokenEntity {
 }
 
 export interface FingerPrintDto {
-	/**
-	 * fingerprint
-	 * 示例: "asas"
-	 */
-	fingerprint: string;
+	fingerprint: Record<string, any>;
 }
 
 export interface UserInfoEntity {
@@ -836,6 +801,7 @@ export interface RoleOneEntity {
 	editor?: number | null;
 
 	deleted: boolean;
+
 	isSystem?: boolean;
 }
 
@@ -868,6 +834,10 @@ export interface CreateRoleDto {
 	 *  角色介紹
 	 */
 	intro?: string;
+	/**
+	 *  是否為系統角色
+	 */
+	isSystem?: boolean;
 }
 
 export interface RoleListEntity {
@@ -894,6 +864,10 @@ export interface UpdateRoleDto {
 	 *  角色介紹
 	 */
 	intro?: string;
+	/**
+	 *  是否為系統角色
+	 */
+	isSystem?: boolean;
 	/**
 	 *  是否刪除，可為空，預設 false
 	 */
@@ -1026,7 +1000,7 @@ export interface PushMessageDto {
 	sender?: string;
 }
 
-export interface PartialArticleEmtity {
+export interface PartialArticleEntity {
 	/**
 	 * 文章ID 公開的id
 	 */
@@ -1042,7 +1016,7 @@ export interface PartialArticleEmtity {
 export interface CreateArticleEntity {
 	message: string;
 
-	article: PartialArticleEmtity;
+	article: PartialArticleEntity;
 }
 
 export interface TocInfoDto {
@@ -1052,6 +1026,7 @@ export interface TocInfoDto {
 
 	level?: number;
 }
+
 export interface CreateTagDto {
 	/**
 	 * 標籤名稱
@@ -1062,6 +1037,7 @@ export interface CreateTagDto {
 	 */
 	slug?: string | null;
 }
+
 export interface CreateArticleDto {
 	/**
 	 * 文章ID 公開的id
@@ -1145,13 +1121,35 @@ export interface CreateArticleDto {
 	 * 外部文章作者
 	 */
 	external_author?: string;
-	/** 文章缩略图 */
+
 	thumbnail?: string;
 	/**
 	 * 標籤
 	 */
 	tags?: CreateTagDto[];
 }
+
+export interface ArticleCategoryEntity {
+	/**
+	 * 分类ID
+	 */
+	id: number;
+
+	name: string;
+	/**
+	 * 分类路径
+	 */
+	slug?: string | null;
+}
+
+export interface PartialUserInfoEntity {
+	userId: string;
+
+	userName: string;
+
+	headImgUrl?: string;
+}
+
 export interface TagDto {
 	/**
 	 * 標籤名稱
@@ -1166,6 +1164,7 @@ export interface TagDto {
 	 */
 	id: number;
 }
+
 export interface ArticleEntity {
 	/**
 	 * 文章ID 公開的id
@@ -1249,14 +1248,28 @@ export interface ArticleEntity {
 	 * 外部文章作者
 	 */
 	external_author?: string;
-	/** 文章缩略图 */
-	thumbnail?: string;
 
-	id: string;
-	/** 文章的创建时间 */
+	thumbnail?: string;
+	/**
+	 * 標籤
+	 */
+	tags?: CreateTagDto[];
+	/**
+	 * 文章的创建时间
+	 */
 	created_at?: string;
-	/** 文章关联的分类信息 */
-	article_categories?: Pick<CategoryResponseDto, "id" | "name" | "slug">;
+	/**
+	 * 文章分类的详情
+	 */
+	article_categories?: any;
+	/**
+	 * 文章的创建者
+	 */
+	creator?: any | null;
+	/**
+	 * 文章的编辑者
+	 */
+	editor?: any | null;
 	/**
 	 * 文章的标签
 	 */
@@ -1352,12 +1365,60 @@ export interface UpdateArticleDto {
 	 * 外部文章作者
 	 */
 	external_author?: string;
-	/** 文章缩略图 */
+
 	thumbnail?: string;
 	/**
 	 * 標籤
 	 */
 	tags?: CreateTagDto[];
+}
+
+export interface IncreaseReadingDto {
+	/**
+	 * 文章publicId
+	 */
+	publicId: string;
+}
+
+export interface ArticleReadingEntity {
+	/**
+	 * 文章ID 公開的id
+	 */
+	public_id?: string;
+	/**
+	 * 文章標題
+	 */
+	title: string;
+
+	slug: string;
+	/**
+	 * 文章閱讀量
+	 */
+	reading?: number;
+	/**
+	 * 文章發布時間
+	 */
+	published_at?: string;
+}
+
+export interface ArticleReadingsEntities {
+	items: ArticleReadingEntity[];
+
+	pagination: PaginationResponseEntity;
+}
+
+export interface BatchAssignDto {
+	delete: number;
+
+	create: number;
+}
+
+export interface AssignCommonStringListDto {
+	/**
+	 * ID列表（允许空数组）
+	 * 示例: [1, 2, 3]
+	 */
+	ids?: string[];
 }
 
 export interface CategoryResponseDto {
@@ -1406,6 +1467,22 @@ export interface CreateArticleCategoryDto {
 	slug?: string;
 }
 
+export interface GetArticleCountDto {
+	count: number;
+
+	name: string;
+
+	slug: string;
+
+	category_id: number;
+}
+
+export interface GetArticleCountResponseDto {
+	items: GetArticleCountDto[];
+
+	pagination: PaginationResponseEntity;
+}
+
 export interface CategoryResponseWithPaginationDto {
 	items: CategoryResponseDto[];
 
@@ -1429,4 +1506,488 @@ export interface UpdateArticleCategoryDto {
 	 * URL-friendly category name
 	 */
 	slug?: string;
+}
+
+export interface Advertisement {
+	id: string;
+
+	title: string | null;
+
+	coverImage?: string;
+
+	shortDesc: string | null;
+
+	redirectUrl: string | null;
+
+	adPositionId: string | null;
+
+	priority: number | null;
+
+	status?: "DRAFT" | "ENABLED" | "DISABLED" | "EXPIRED";
+
+	startTime: string | null;
+
+	endTime: string | null;
+
+	clickCount: number | null;
+
+	viewCount: number | null;
+
+	clickRate: number | null;
+
+	maxClicks: number | null;
+
+	maxViews: number | null;
+
+	createdAt: string | null;
+
+	updatedAt: string | null;
+
+	creator: string | null;
+
+	editor: string | null;
+}
+
+export interface CreateAdvertisementDto {
+	/**
+	 * 简短描述
+	 * 示例: "这是一个广告的简短描述"
+	 */
+	shortDesc?: string;
+	/**
+	 * 重定向URL
+	 * 示例: "https://example.com"
+	 */
+	redirectUrl: string;
+	/**
+	 * 优先级
+	 * 示例: 1
+	 */
+	priority?: number;
+	/**
+	 * 状态
+	 * 示例: "DRAFT"
+	 */
+	status?: "DRAFT" | "ENABLED" | "DISABLED" | "EXPIRED";
+	/**
+	 * 平台
+	 * 示例: ["WEB", "MOBILE"]
+	 */
+	platform?: string[];
+	/**
+	 * 开始时间
+	 * 示例: "2023-01-01T00:00:00Z"
+	 */
+	startTime?: string | Date;
+	/**
+	 * 结束时间
+	 * 示例: "2023-12-31T23:59:59Z"
+	 */
+	endTime?: string | Date;
+	/**
+	 * 点击次数
+	 * 示例: 0
+	 */
+	clickCount?: number;
+	/**
+	 * 浏览次数
+	 * 示例: 0
+	 */
+	viewCount?: number;
+	/**
+	 * 点击率
+	 * 示例: 0.5
+	 */
+	clickRate?: number;
+	/**
+	 * 最大点击数
+	 * 示例: 1000
+	 */
+	maxClicks?: number;
+	/**
+	 * 最大浏览数
+	 * 示例: 10000
+	 */
+	maxViews?: number;
+	/**
+	 * 创建时间
+	 * 示例: "2023-01-01T00:00:00Z"
+	 */
+	createdAt?: string;
+	/**
+	 * 更新时间
+	 * 示例: "2023-01-01T00:00:00Z"
+	 */
+	updatedAt?: string;
+	/**
+	 * 创建者
+	 * 示例: "user-id"
+	 */
+	creator?: string;
+	/**
+	 * 编辑者
+	 * 示例: "user-id"
+	 */
+	editor?: string;
+
+	id?: string;
+
+	title: string;
+
+	coverImage: string;
+
+	adPositionId: string;
+}
+
+export interface PaginationResponse {
+	/**
+	 * 当前页码（从1开始）
+	 * 示例: 1
+	 */
+	page: number;
+	/**
+	 * 每页条数
+	 * 示例: 10
+	 */
+	pageSize: number;
+	/**
+	 * 总条数
+	 * 示例: 100
+	 */
+	total: number;
+	/**
+	 * 总页数
+	 * 示例: 10
+	 */
+	totalPages: number;
+	/**
+	 * 是否有下一页
+	 * 示例: true
+	 */
+	hasNext?: boolean;
+}
+
+export interface PaginationAdvertisementResponseDto {
+	/**
+	 * 分页信息
+	 */
+	pagination: any;
+	/**
+	 * 广告列表
+	 */
+	items: Advertisement[];
+}
+
+export interface UpdateAdvertisementDto {
+	/**
+	 * 简短描述
+	 * 示例: "这是一个广告的简短描述"
+	 */
+	shortDesc?: string;
+	/**
+	 * 重定向URL
+	 * 示例: "https://example.com"
+	 */
+	redirectUrl?: string;
+	/**
+	 * 优先级
+	 * 示例: 1
+	 */
+	priority?: number;
+	/**
+	 * 状态
+	 * 示例: "DRAFT"
+	 */
+	status?: "DRAFT" | "ENABLED" | "DISABLED" | "EXPIRED";
+	/**
+	 * 平台
+	 * 示例: ["WEB", "MOBILE"]
+	 */
+	platform?: string[];
+	/**
+	 * 开始时间
+	 * 示例: "2023-01-01T00:00:00Z"
+	 */
+	startTime?: string | Date;
+	/**
+	 * 结束时间
+	 * 示例: "2023-12-31T23:59:59Z"
+	 */
+	endTime?: string | Date;
+	/**
+	 * 点击次数
+	 * 示例: 0
+	 */
+	clickCount?: number;
+	/**
+	 * 浏览次数
+	 * 示例: 0
+	 */
+	viewCount?: number;
+	/**
+	 * 点击率
+	 * 示例: 0.5
+	 */
+	clickRate?: number;
+	/**
+	 * 最大点击数
+	 * 示例: 1000
+	 */
+	maxClicks?: number;
+	/**
+	 * 最大浏览数
+	 * 示例: 10000
+	 */
+	maxViews?: number;
+	/**
+	 * 创建时间
+	 * 示例: "2023-01-01T00:00:00Z"
+	 */
+	createdAt?: string;
+	/**
+	 * 更新时间
+	 * 示例: "2023-01-01T00:00:00Z"
+	 */
+	updatedAt?: string;
+	/**
+	 * 创建者
+	 * 示例: "user-id"
+	 */
+	creator?: string;
+	/**
+	 * 编辑者
+	 * 示例: "user-id"
+	 */
+	editor?: string;
+
+	id?: string;
+
+	title?: string;
+
+	coverImage?: string;
+
+	adPositionId?: string;
+}
+
+export interface AssignCommonDto {
+	/**
+	 * ID列表（允许空数组）
+	 * 示例: [1, 2, 3]
+	 */
+	ids?: number[];
+}
+
+export interface AdPosition {
+	/**
+	 * 广告位置ID
+	 */
+	id: string;
+	/**
+	 * 广告位置名称
+	 */
+	name: string | null;
+	/**
+	 * 广告位置编码
+	 */
+	code: string | null;
+	/**
+	 * 广告位置描述
+	 */
+	description: string | null;
+	/**
+	 * 广告位置宽度
+	 */
+	width: number | null;
+	/**
+	 * 广告位置高度
+	 */
+	height: number | null;
+	/**
+	 * 广告位置类型
+	 */
+	type: Record<string, any> | null;
+	/**
+	 * 广告位置状态
+	 */
+	status: boolean | null;
+	/**
+	 * 广告位置最大广告数
+	 */
+	maxAds: number | null;
+	/**
+	 * 广告位置创建时间
+	 */
+	createdAt: string | null;
+	/**
+	 * 广告位置更新时间
+	 */
+	updatedAt: string | null;
+}
+
+export interface CreateAdPositionDto {
+	/**
+	 * 广告位名称
+	 * 示例: "首页轮播图"
+	 */
+	name: string;
+	/**
+	 * 广告位编码（唯一）
+	 * 示例: "home_carousel"
+	 */
+	code: string;
+	/**
+	 * 广告位描述
+	 * 示例: "首页顶部轮播图广告位"
+	 */
+	description?: string | null;
+	/**
+	 * 广告位宽度（像素）
+	 * 示例: 1920
+	 */
+	width?: number | null;
+	/**
+	 * 广告位高度（像素）
+	 * 示例: 600
+	 */
+	height?: number | null;
+	/**
+	 * 广告位类型
+	 * 示例: "BANNER"
+	 */
+	type?: "BANNER" | "POPUP" | "SIDEBAR" | "FEED" | "SPLASH" | "INTERSTITIAL";
+	/**
+	 * 广告位状态
+	 * 示例: true
+	 */
+	status?: boolean;
+	/**
+	 * 最大广告数量
+	 * 示例: 5
+	 */
+	maxAds?: number;
+	/**
+	 * 创建时间（ISO格式）
+	 * 示例: "2024-01-01T00:00:00.000Z"
+	 */
+	createdAt?: Record<string, any>;
+	/**
+	 * 更新时间（ISO格式）
+	 * 示例: "2024-01-01T00:00:00.000Z"
+	 */
+	updatedAt?: Record<string, any>;
+}
+
+export interface AdPositionResponseDto {
+	/**
+	 * 广告位ID
+	 */
+	id: string;
+	/**
+	 * 广告位名称
+	 */
+	name: string;
+	/**
+	 * 广告位编码
+	 */
+	code: string;
+	/**
+	 * 描述
+	 */
+	description?: string;
+	/**
+	 * 宽度
+	 */
+	width?: number;
+	/**
+	 * 高度
+	 */
+	height?: number;
+	/**
+	 * 广告位类型
+	 */
+	type: Record<string, any>;
+	/**
+	 * 状态
+	 */
+	status: boolean;
+	/**
+	 * 最大广告数量
+	 */
+	maxAds: number;
+	/**
+	 * 创建时间
+	 */
+	createdAt: string;
+	/**
+	 * 更新时间
+	 */
+	updatedAt: string;
+	/**
+	 * 广告数量
+	 */
+	adCount?: number;
+}
+
+export interface PaginationAdPositionResponseDto {
+	/**
+	 * 分页信息
+	 */
+	pagination: any;
+	/**
+	 * 广告位置列表
+	 */
+	items: AdPositionResponseDto[];
+}
+
+export interface UpdateAdPositionDto {
+	/**
+	 * 广告位名称
+	 * 示例: "首页轮播图"
+	 */
+	name?: string;
+	/**
+	 * 广告位编码（唯一）
+	 * 示例: "home_carousel"
+	 */
+	code?: string;
+	/**
+	 * 广告位描述
+	 * 示例: "首页顶部轮播图广告位"
+	 */
+	description?: string | null;
+	/**
+	 * 广告位宽度（像素）
+	 * 示例: 1920
+	 */
+	width?: number | null;
+	/**
+	 * 广告位高度（像素）
+	 * 示例: 600
+	 */
+	height?: number | null;
+	/**
+	 * 广告位类型
+	 * 示例: "BANNER"
+	 */
+	type?: "BANNER" | "POPUP" | "SIDEBAR" | "FEED" | "SPLASH" | "INTERSTITIAL";
+	/**
+	 * 广告位状态
+	 * 示例: true
+	 */
+	status?: boolean;
+	/**
+	 * 最大广告数量
+	 * 示例: 5
+	 */
+	maxAds?: number;
+	/**
+	 * 创建时间（ISO格式）
+	 * 示例: "2024-01-01T00:00:00.000Z"
+	 */
+	createdAt?: Record<string, any>;
+	/**
+	 * 更新时间（ISO格式）
+	 * 示例: "2024-01-01T00:00:00.000Z"
+	 */
+	updatedAt?: Record<string, any>;
 }

@@ -1,4 +1,29 @@
 import type { TimeRangeDto } from "./output.d.ts";
+export interface Reqadpositionsfindallquery {
+	/** 分页偏移量 无需填写 会自动计算 */
+	offset?: number;
+	/** 广告位类型 */
+	type?: string;
+	/** 状态 */
+	status?: boolean;
+	/** 排序字段 */
+	sortBy?: string;
+	/** 排序方向 */
+	sortOrder?: string;
+	page: number;
+	pageSize: number;
+	keyword?: string;
+}
+export interface Reqadvertisementfindallquery {
+	/** 分页偏移量 无需填写 会自动计算 */
+	offset?: number;
+	/** 查询关键字 */
+	keyword?: string;
+	/** 广告状态 */
+	status?: boolean;
+	page: number;
+	pageSize: number;
+}
 export interface Reqarticlefindallquery {
 	page: number;
 	pageSize: number;
@@ -17,6 +42,14 @@ export interface Reqarticlefindallquery {
 	/** 文章標題 */
 	title?: string;
 	slug?: string;
+	/** 文章分類ID */
+	category_id?: number;
+}
+export interface Reqarticlegetarticlereadingquery {
+	/** 页码（默认：1） */
+	page?: number;
+	/** 每页条数（默认：10） */
+	pageSize?: number;
 }
 export interface Reqemailsendcodequery {
 	to: string;

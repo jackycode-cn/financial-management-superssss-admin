@@ -280,7 +280,7 @@ const ArticleList: React.FC = () => {
 			<Table
 				columns={columns}
 				scroll={{ x: "max-content" }}
-				dataSource={articles.map((article) => ({ ...article, key: article.id }))}
+				dataSource={articles.map((article) => ({ ...article, key: article.public_id }))}
 				loading={loading}
 				pagination={pagination}
 				onChange={(_pagination: TablePaginationConfig) => setPagination(_pagination)}

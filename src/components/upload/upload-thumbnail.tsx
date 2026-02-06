@@ -3,13 +3,13 @@ import { themeVars } from "@/theme/theme.css";
 import type { CustomResponse, UploadImageFileEntity } from "@/types";
 import { Text } from "@/ui/typography";
 import { fBytes } from "@/utils/format-number";
+import type { UploadFile, UploadProps } from "antd";
 import { Upload } from "antd";
-import type { UploadChangeParam, UploadFile, UploadProps } from "antd/es/upload";
-import { useState } from "react";
+import type { UploadChangeParam } from "antd/lib/upload";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { StyledUpload } from "./styles";
 import { beforeAvatarUpload } from "./utils";
-
 interface ThumbnailUploadProps extends UploadProps {
 	defaultUrl?: string;
 	helperText?: React.ReactNode;
@@ -68,7 +68,9 @@ export function UploadThumbnail({
 			允許類型: {allowedTypes.join(", ")} <br /> 最大大小: {fBytes(maxSize * 1024 * 1024)}
 		</Text>
 	);
-
+	useEffect(() => {
+		setImageUrl(defaultUrl);
+	}, [defaultUrl]);
 	return (
 		<StyledUpload $thumbnail={true} className="flex items-center flex-col justify-center">
 			<Upload

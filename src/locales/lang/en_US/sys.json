@@ -91,6 +91,11 @@
 				"500": "500",
 				"index": "Error Page"
 			},
+			"ads": {
+				"index": "Ads",
+				"position": "Ads Position",
+				"admin": "Ads Admin"
+			},
 			"external_link": "External Link",
 			"link": "Item External",
 			"functions": "Functions",

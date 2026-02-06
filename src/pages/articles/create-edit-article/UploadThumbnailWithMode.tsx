@@ -2,7 +2,7 @@ import { UploadThumbnail } from "@/components/upload/upload-thumbnail";
 import { GLOBAL_CONFIG } from "@/global-config";
 import { useUserToken } from "@/store/userStore";
 import { Radio } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
 	value?: string;
@@ -26,6 +26,9 @@ export function UploadThumbnailWithMode({ value, onChange, disabled, defaultMode
 		setThumbnail(url);
 		onChange?.(url);
 	};
+	useEffect(() => {
+		setThumbnail(value);
+	}, [value]);
 	return (
 		<div className="flex flex-col gap-2 w-full">
 			<Radio.Group onChange={handleModeChange} value={mode} disabled={disabled}>
