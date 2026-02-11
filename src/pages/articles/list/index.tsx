@@ -4,13 +4,13 @@ import StatusSwitchTag from "@/components/Tags/status-tag";
 import StatusFilterSelect from "@/components/select/StatusFilterSelect";
 import { useRouter } from "@/routes/hooks";
 import { Button } from "@/ui/button";
-import { Input, Popconfirm, Space, Table, Tag } from "antd";
+import { Drawer, Input, Popconfirm, Space, Table, Tag, Tooltip } from "antd";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import { formatDate } from "date-fns";
 import type React from "react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
-
+import ArticleAdsManager from "../components/ArticleAdsManager";
 type StatusMapFilterType = "is_archive" | "is_published" | "is_featured" | "is_hot" | "is_top";
 type StatusMapFilter = {
 	[K in StatusMapFilterType]?: boolean;
@@ -220,11 +220,24 @@ const ArticleList: React.FC = () => {
 							刪除
 						</Button>
 					</Popconfirm>
+					<Tooltip title="分配廣告到文章">
+						<Button onClick={() => handleAssignAds(record)}>分配</Button>
+					</Tooltip>
 				</Space>
 			),
 		},
 	];
+	const [selectedArticle, setSelectedArticle] = useState<ArticleEntity | null>(null);
+	const [isAssignDrawerVisible, setIsAssignDrawerVisible] = useState(false);
+	const handleAssignAds = (record: ArticleEntity) => {
+		setSelectedArticle(record);
+		setIsAssignDrawerVisible(true);
+	};
 
+	const onCloseAssignDrawer = useCallback(() => {
+		setIsAssignDrawerVisible(false);
+		setSelectedArticle(null);
+	}, []);
 	return (
 		<div className="article-list-container">
 			<div className="article-list-header flex flex-col md:flex-row md:justify-between gap-2 mb-2">
@@ -286,6 +299,28 @@ const ArticleList: React.FC = () => {
 				onChange={(_pagination: TablePaginationConfig) => setPagination(_pagination)}
 				rowKey="public_id"
 			/>
+
+			{/* 分配廣告到文章的抽屜 */}
+			<Drawer
+				title={`分配廣告到文章: ${selectedArticle?.title || ""}`}
+				placement="right"
+				width={600}
+				open={isAssignDrawerVisible}
+				destroyOnClose
+				onClose={onCloseAssignDrawer}
+			>
+				{useMemo(
+					() =>
+						selectedArticle && (
+							<ArticleAdsManager
+								publicArticleId={selectedArticle.public_id || ""}
+								articleTitle={selectedArticle.title || ""}
+								onClose={onCloseAssignDrawer}
+							/>
+						),
+					[selectedArticle, onCloseAssignDrawer],
+				)}
+			</Drawer>
 		</div>
 	);
 };

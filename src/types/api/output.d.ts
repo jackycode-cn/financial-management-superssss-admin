@@ -1671,7 +1671,7 @@ export interface PaginationAdvertisementResponseDto {
 	/**
 	 * 分页信息
 	 */
-	pagination: any;
+	pagination: PaginationResponse;
 	/**
 	 * 广告列表
 	 */

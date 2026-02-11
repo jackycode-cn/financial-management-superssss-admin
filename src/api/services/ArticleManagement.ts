@@ -3,7 +3,9 @@ import { apiClient } from "../apiClient";
 import type {
 	ArticleEntity,
 	ArticlesEntities,
+	AssignCommonStringListDto,
 	Ate,
+	BatchAssignDto,
 	CreateArticleDto,
 	CreateArticleEntity,
 	Reqarticlefindallquery,
@@ -45,4 +47,14 @@ export async function reqArticleupdate(id: string, data: UpdateArticleDto): Prom
  */
 export async function reqArticleremove(id: string): Promise<string> {
 	return await apiClient.delete(`/api/article/${id}`);
+}
+
+/**
+ *根据文章的公开ID分配文章的广告
+ */
+export async function reqArticleassignadvertisementtoarticlebypublicid(
+	publicArticleId: string,
+	data: AssignCommonStringListDto,
+): Promise<BatchAssignDto> {
+	return await apiClient.post(`/api/article/advertisement/public/${publicArticleId}`, data);
 }

@@ -20,7 +20,7 @@ export interface Reqadvertisementfindallquery {
 	/** 查询关键字 */
 	keyword?: string;
 	/** 广告状态 */
-	status?: boolean;
+	status?: "DRAFT" | "ENABLED" | "DISABLED" | "EXPIRED";
 	page: number;
 	pageSize: number;
 }
