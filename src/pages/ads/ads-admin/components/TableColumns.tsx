@@ -1,4 +1,4 @@
-import type { Advertisement } from "#/api";
+import type { AdPositionResponseDto, Advertisement } from "#/api";
 import { Image, Space, Tag, Typography } from "antd";
 import type { ColumnType } from "antd/es/table";
 import { LucideDelete, LucideEdit, LucideEye } from "lucide-react";
@@ -57,11 +57,32 @@ export const getTableColumns = ({
 		title: "簡短描述",
 		dataIndex: "shortDesc",
 		key: "shortDesc",
+		ellipsis: true,
 		render: (text: string) => (
 			<Text ellipsis={{ tooltip: text }} style={{ maxWidth: 200 }}>
 				{text}
 			</Text>
 		),
+	},
+	/**
+	 * 廣告位信息
+	 */
+	{
+		title: "廣告位",
+		dataIndex: "adPosition",
+		key: "adPosition",
+		ellipsis: true,
+		render: (adPosition: AdPositionResponseDto | null) => {
+			const width = adPosition?.width;
+			const height = adPosition?.height;
+			const size = `${width}px x ${height}px`;
+			const text = `	${adPosition?.name || "-"} [${size}]`;
+			return (
+				<Text ellipsis={{ tooltip: text }} style={{ maxWidth: 120 }}>
+					{text}
+				</Text>
+			);
+		},
 	},
 	{
 		title: "優先級",

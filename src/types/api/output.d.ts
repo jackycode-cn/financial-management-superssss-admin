@@ -1546,6 +1546,7 @@ export interface Advertisement {
 	creator: string | null;
 
 	editor: string | null;
+	adPosition?: AdPositionResponseDto | null;
 }
 
 export interface CreateAdvertisementDto {

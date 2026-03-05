@@ -23,6 +23,10 @@ export interface Reqadvertisementfindallquery {
 	status?: "DRAFT" | "ENABLED" | "DISABLED" | "EXPIRED";
 	page: number;
 	pageSize: number;
+	/**
+	 * 广告位ID
+	 */
+	adPositionId?: string;
 }
 export interface Reqarticlefindallquery {
 	page: number;
