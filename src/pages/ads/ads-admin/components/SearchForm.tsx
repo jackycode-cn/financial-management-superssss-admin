@@ -1,5 +1,6 @@
 import type { Reqadvertisementfindallquery } from "#/api";
 import { Button, Form, Input, Select, Space } from "antd";
+import SelectAdsPositions from "../../ads.position/components/select-ads-positions";
 
 interface SearchFormProps {
 	form: any;
@@ -20,6 +21,14 @@ const SearchForm = ({ form, onSearch, onReset }: SearchFormProps) => {
 					<Select.Option value="DRAFT">草稿</Select.Option>
 					<Select.Option value="EXPIRED">過期</Select.Option>
 				</Select>
+			</Form.Item>
+			<Form.Item name="adPositionId" label="廣告位">
+				<SelectAdsPositions
+					placeholder="請選擇廣告位置"
+					style={{
+						width: 255,
+					}}
+				/>
 			</Form.Item>
 			<Form.Item>
 				<Space>
