@@ -53,6 +53,17 @@
 		"align": "對齊",
 		"formula": "公式",
 		"pdf": "PDF导出",
-		"all": "全部"
+		"all": "全部",
+		"size": {
+			"small": "小號",
+			"normal": "正常",
+			"large": "大號",
+			"huge": "特大號"
+		},
+		"font_family": {
+			"sans": "無衬線字體",
+			"serif": "衬線字體",
+			"monospace": "等寬字體"
+		}
 	}
 }

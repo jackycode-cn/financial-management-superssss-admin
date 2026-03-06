@@ -56,11 +56,26 @@ const StyledEditor = styled.div`
     font-size: 0.875rem; /* 14px */
   }
 
+  & table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+  }
+
+  & th,
+  & td {
+    border: 1px solid #eaecef;
+    padding: 2px 5px;
+  }
+
+  & th {
+    background-color: #f6f8fa;
+    font-weight: 600;
+  }
+
   /* 编辑器内容 */
   & .ql-editor {
-    min-height: 160px;
-    max-height: 65vh;
-    background-color: rgba(145, 158, 171, 0.08);
+    height: 65vh;
 
     &.ql-blank::before {
       font-style: normal;

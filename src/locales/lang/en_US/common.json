@@ -53,6 +53,17 @@
 		"align": "Align",
 		"formula": "Formula",
 		"pdf": "PDF",
-		"all": "All"
+		"all": "All",
+		"size": {
+			"small": "Small",
+			"normal": "Normal",
+			"large": "Large",
+			"huge": "Huge"
+		},
+		"font_family": {
+			"sans": "Sans Serif",
+			"serif": "Serif",
+			"monospace": "Monospace"
+		}
 	}
 }

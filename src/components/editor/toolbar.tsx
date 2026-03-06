@@ -36,6 +36,9 @@ export const formats = [
 	"table",
 	"underline",
 	"video",
+	["bold", "italic", "underline", "strike"],
+	// "table-better",
+	["table-better"],
 ];
 
 type EditorToolbarProps = {
@@ -57,6 +60,22 @@ function Toolbar({ id, isSimple }: EditorToolbarProps) {
 						))}
 						<option value="">{t("common.normal")}</option>
 					</select>
+
+					{!isSimple && (
+						<select className="ql-size" defaultValue="">
+							<option value="small">{t("common.size.small")}</option>
+							<option value="">{t("common.size.normal")}</option>
+							<option value="large">{t("common.size.large")}</option>
+							<option value="huge">{t("common.size.huge")}</option>
+						</select>
+					)}
+					{!isSimple && (
+						<select className="ql-font" defaultValue="">
+							<option value="">{t("common.font_family.sans")}</option>
+							<option value="serif">{t("common.font_family.serif")}</option>
+							<option value="monospace">{t("common.font_family.monospace")}</option>
+						</select>
+					)}
 				</div>
 
 				<div className="ql-formats">
@@ -72,6 +91,10 @@ function Toolbar({ id, isSimple }: EditorToolbarProps) {
 						<select className="ql-background" title={t("common.background")} />
 					</div>
 				)}
+
+				<div className="ql-formats">
+					<button type="button" className="ql-table" title={t("common.table")} />
+				</div>
 
 				<div className="ql-formats">
 					<button type="button" className="ql-list" value="ordered" title={t("common.orderedList")} />

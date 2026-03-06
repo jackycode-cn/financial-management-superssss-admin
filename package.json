@@ -52,6 +52,7 @@
 		"motion": "^12.9.0",
 		"numeral": "^2.0.6",
 		"qrcode.react": "^4.2.0",
+		"quill-table-better": "^1.2.3",
 		"radix-ui": "^1.4.2",
 		"ramda": "^0.29.1",
 		"rc-tween-one": "^3.0.6",
