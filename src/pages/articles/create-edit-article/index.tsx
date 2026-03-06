@@ -1,5 +1,5 @@
 import { reqArticlecreate, reqArticlefindone, reqArticleupdate } from "@/api/services";
-import Editor from "@/components/editor";
+import Editor, { type EditorRef } from "@/components/editor";
 import PreviewContent from "@/components/editor/preview/preview-content";
 import { useArticleCategories } from "@/hooks/use-article-categories";
 import { useParams } from "@/routes/hooks";
@@ -10,7 +10,7 @@ import { htmlToText } from "@/utils/htmlToText";
 import { Modal } from "antd";
 import { ShieldCloseIcon } from "lucide-react";
 import type React from "react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -49,15 +49,18 @@ const CreateArticle: React.FC<CreateArticleProps> = ({ title }) => {
 	const [showArticle, setShowArticle] = useState(false);
 	const [formValue, setFormValue] = useState<CreateArticleDto>(InitailFormValue);
 	const handleSubmit = () => {
-		const textContent = htmlToText(quillFull);
+		// 从编辑器获取最新内容（确保内容最新）
+		const content = editorRef.current?.getContent() || "";
+		const textContent = htmlToText(content);
 		if (!textContent.trim()) {
 			toast.error(t("articlePage.contentEmptyError"));
 			return;
 		}
-		setFormValue((prev) => ({ ...prev, content: quillFull }));
+		setFormValue((prev) => ({ ...prev, content }));
 		setShowArticle(true);
 	};
 
+	const editorRef = useRef<EditorRef>(null); // 创建 ref
 	const handleCancel = () => {
 		setShowArticle(false);
 	};
@@ -107,7 +110,7 @@ const CreateArticle: React.FC<CreateArticleProps> = ({ title }) => {
 								}))
 							: [],
 					});
-					setQuillFull(articleData.content || "");
+					editorRef.current?.setContent(articleData.content || "");
 				} catch (error) {
 					toast.error(t("articlePage.loadError"));
 					navigate("/articles");
@@ -116,7 +119,7 @@ const CreateArticle: React.FC<CreateArticleProps> = ({ title }) => {
 			fetchArticleDetail();
 		} else {
 			setFormValue(InitailFormValue);
-			setQuillFull("");
+			editorRef.current?.setContent("");
 		}
 	}, [articleId, isEditMode, navigate, t]);
 
@@ -127,6 +130,7 @@ const CreateArticle: React.FC<CreateArticleProps> = ({ title }) => {
 	const handleShowPreview = useCallback(() => {
 		setShowPreview(true);
 	}, []);
+
 	return (
 		<Card>
 			<div className="createArticle-container w-full  mx-auto p-4 relative">
@@ -140,8 +144,7 @@ const CreateArticle: React.FC<CreateArticleProps> = ({ title }) => {
 				</h2>
 				{/* 富文本编辑器 */}
 				<Editor
-					value={quillFull}
-					onChange={setQuillFull}
+					ref={editorRef}
 					placeholder={t("articlePage.contentPlaceholder")}
 					className="w-full max-h-[65vh] border border-gray-300 rounded"
 				/>

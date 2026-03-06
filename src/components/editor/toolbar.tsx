@@ -11,7 +11,6 @@ const HEADINGS = [
 	"common.title.5",
 	"common.title.6",
 ];
-
 export const formats = [
 	"align",
 	"background",
@@ -36,9 +35,6 @@ export const formats = [
 	"table",
 	"underline",
 	"video",
-	["bold", "italic", "underline", "strike"],
-	// "table-better",
-	["table-better"],
 ];
 
 type EditorToolbarProps = {
@@ -93,7 +89,8 @@ function Toolbar({ id, isSimple }: EditorToolbarProps) {
 				)}
 
 				<div className="ql-formats">
-					<button type="button" className="ql-table" title={t("common.table")} />
+					{/* <button type="button" className="ql-table" title={t("common.table")} /> */}
+					<button type="button" className="ql-table-better" title={t("common.table")} />
 				</div>
 
 				<div className="ql-formats">
