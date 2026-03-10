@@ -127,17 +127,7 @@ const AdvertisementManagement = () => {
 				await reqAdvertisementupdate(editingRecord.id, updateParams);
 				toast.success("更新成功");
 			} else {
-				assertFieldsExist(processedValues, [
-					"title",
-					"coverImage",
-					"shortDesc",
-					"redirectUrl",
-					"adPositionId",
-					"priority",
-					"status",
-					"startTime",
-					"endTime",
-				]);
+				assertFieldsExist(processedValues, ["title", "shortDesc", "redirectUrl", "adPositionId", "priority", "status"]);
 				const createParams: CreateAdvertisementDto = processedValues as CreateAdvertisementDto;
 				await reqAdvertisementcreate(createParams);
 				toast.success("創建成功");
