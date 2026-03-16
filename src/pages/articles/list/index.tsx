@@ -4,7 +4,7 @@ import StatusSwitchTag from "@/components/Tags/status-tag";
 import StatusFilterSelect from "@/components/select/StatusFilterSelect";
 import { useRouter } from "@/routes/hooks";
 import { Button } from "@/ui/button";
-import { Drawer, Input, Popconfirm, Space, Table, Tag, Tooltip } from "antd";
+import { Drawer, Image, Input, Popconfirm, Space, Table, Tag, Tooltip } from "antd";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import { formatDate } from "date-fns";
 import type React from "react";
@@ -120,6 +120,14 @@ const ArticleList: React.FC = () => {
 			dataIndex: "title",
 			key: "title",
 			ellipsis: true,
+		},
+		{
+			title: "文章縮略圖",
+			dataIndex: "thumbnail",
+			key: "thumbnail",
+			align: "center",
+			render: (thumbnail?: string) =>
+				thumbnail ? <Image src={thumbnail} style={{ width: 40, height: 40, borderRadius: 4 }} /> : "-",
 		},
 		{
 			title: "發布狀態",

@@ -1,7 +1,5 @@
 import type { TimeRangeDto } from "./output.d.ts";
 export interface Reqadpositionsfindallquery {
-	/** 分页偏移量 无需填写 会自动计算 */
-	offset?: number;
 	/** 广告位类型 */
 	type?: string;
 	/** 状态 */
@@ -10,23 +8,28 @@ export interface Reqadpositionsfindallquery {
 	sortBy?: string;
 	/** 排序方向 */
 	sortOrder?: string;
+	/** 關鍵字查找 */
+	keyword?: string;
 	page: number;
 	pageSize: number;
-	keyword?: string;
 }
 export interface Reqadvertisementfindallquery {
-	/** 分页偏移量 无需填写 会自动计算 */
-	offset?: number;
 	/** 查询关键字 */
 	keyword?: string;
 	/** 广告状态 */
 	status?: "DRAFT" | "ENABLED" | "DISABLED" | "EXPIRED";
+	/** 广告位ID */
+	adPositionId?: string;
 	page: number;
 	pageSize: number;
-	/**
-	 * 广告位ID
-	 */
-	adPositionId?: string;
+}
+export interface Reqadvertisementfindonequery {
+	/** 是否需要包含广告位信息 */
+	includeAdPosition?: number;
+}
+export interface Reqadvertisementgetarticleadvertisementsbypublicarticleidquery {
+	/** 是否需要包含广告位信息 */
+	includeAdPosition?: number;
 }
 export interface Reqarticlefindallquery {
 	page: number;
@@ -54,6 +57,54 @@ export interface Reqarticlegetarticlereadingquery {
 	page?: number;
 	/** 每页条数（默认：10） */
 	pageSize?: number;
+}
+export interface Reqarticlegetarticlesbyslugquery {
+	/** 是否需要廣告信息 */
+	needAd: number;
+}
+export interface Reqeavfindallattributedefsquery {
+	/** 所屬實體類型ID */
+	entityTypeId?: string;
+	/** 屬性名稱 */
+	attrName?: string;
+	/** 屬性代碼 */
+	attrCode?: string;
+	/** 屬性類型 */
+	attrType?: string;
+	/** 分組名稱 */
+	groupName?: string;
+	/** 狀態：0禁用 1啟用 */
+	status?: number;
+	page: number;
+	pageSize: number;
+}
+export interface Reqeavfindallentitytypesquery {
+	/** 實體類型名稱 */
+	typeName?: string;
+	/** 實體類型代碼 */
+	typeCode?: string;
+	/** 狀態：0禁用 1啟用 */
+	status?: number;
+	/** 頁碼 */
+	page?: number;
+	/** 頁面大小 */
+	pageSize?: number;
+}
+export interface Reqeavfindbyentityquery {
+	/** 實體ID */
+	entityId: string;
+	/** 實體類型ID */
+	entityTypeId?: string;
+}
+export interface Reqemailgetarticleemailsquery {
+	/** 文章郵箱地址 */
+	email?: string;
+	/** 關聯的設備ID */
+	deviceId?: string;
+	/** 分頁查詢參數 */
+	page?: number;
+	/** 分頁查詢參數：每頁數量 */
+	limit?: number;
 }
 export interface Reqemailsendcodequery {
 	to: string;

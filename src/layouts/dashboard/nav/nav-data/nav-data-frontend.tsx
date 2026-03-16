@@ -1,6 +1,5 @@
 import { Icon } from "@/components/icon";
 import type { NavProps } from "@/components/nav";
-import { Badge } from "@/ui/badge";
 
 export const frontendNavData: NavProps["data"] = [
 	{
@@ -88,7 +87,7 @@ export const frontendNavData: NavProps["data"] = [
 				auth: ["menu:article"],
 			},
 			// menulevel
-			{
+			/* {
 				title: "sys.nav.menulevel.index",
 				path: "/menu_level",
 				icon: <Icon icon="local:ic-menulevel" size="24" />,
@@ -142,10 +141,10 @@ export const frontendNavData: NavProps["data"] = [
 						path: "/error/500",
 					},
 				],
-			},
+			}, */
 		],
 	},
-	{
+	/* {
 		name: "sys.nav.ui",
 		items: [
 			// components
@@ -206,8 +205,8 @@ export const frontendNavData: NavProps["data"] = [
 				],
 			},
 		],
-	},
-	{
+	}, */
+	/* {
 		name: "sys.nav.others",
 		items: [
 			{
@@ -271,7 +270,7 @@ export const frontendNavData: NavProps["data"] = [
 				icon: <Icon icon="local:ic-blank" size="24" />,
 			},
 		],
-	},
+	}, */
 	{
 		name: "sys.nav.ads.index",
 		items: [
@@ -284,6 +283,27 @@ export const frontendNavData: NavProps["data"] = [
 				title: "sys.nav.ads.admin",
 				path: "/ads/admin",
 				icon: <Icon icon="local:ic-ads-admin" size="24" />,
+			},
+		],
+	},
+	/** EAV管理页面 */
+	{
+		name: "sys.nav.eav.index",
+		items: [
+			{
+				title: "sys.nav.eav.entity_type",
+				path: "/eav/entity-type",
+				icon: <Icon icon="local:ic-entity-type" size="24" />,
+			},
+			{
+				title: "sys.nav.eav.attribute_def",
+				path: "/eav/attribute-def",
+				icon: <Icon icon="local:ic-attribute-def" size="24" />,
+			},
+			{
+				title: "sys.nav.eav.entity_attribute_value",
+				path: "/eav/entity-attribute-value",
+				icon: <Icon icon="local:ic-entity-attribute-value" size="24" />,
 			},
 		],
 	},

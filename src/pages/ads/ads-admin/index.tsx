@@ -128,7 +128,7 @@ const AdvertisementManagement = () => {
 				toast.success("更新成功");
 			} else {
 				assertFieldsExist(processedValues, ["title", "shortDesc", "redirectUrl", "adPositionId", "priority", "status"]);
-				const createParams: CreateAdvertisementDto = processedValues as CreateAdvertisementDto;
+				const createParams: CreateAdvertisementDto = processedValues as unknown as CreateAdvertisementDto;
 				await reqAdvertisementcreate(createParams);
 				toast.success("創建成功");
 			}

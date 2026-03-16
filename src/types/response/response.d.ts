@@ -60,3 +60,36 @@ type SendErrorOptions = {
 	/** 错误消息（可选） */
 	errorMessage?: string;
 };
+interface MyPagination {
+	/**
+	 * 当前页码（从1开始）
+	 * 示例: 1
+	 */
+	page: number;
+	/**
+	 * 每页条数
+	 * 示例: 10
+	 */
+	pageSize: number;
+	/**
+	 * 总条数
+	 * 示例: 100
+	 */
+	total: number;
+	/**
+	 * 总页数
+	 * 示例: 10
+	 */
+	totalPages: number;
+	/**
+	 * 是否有下一页
+	 * 示例: true
+	 */
+	hasNext?: boolean;
+}
+
+export interface MyPaginationResponse<T> {
+	pagination: MyPagination;
+
+	items: T[];
+}

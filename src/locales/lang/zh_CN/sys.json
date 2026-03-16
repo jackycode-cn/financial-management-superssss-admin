@@ -152,6 +152,12 @@
 				"index": "广告",
 				"position": "广告位置",
 				"admin": "广告管理"
+			},
+			"eav": {
+				"index": "EAV管理",
+				"entity_type": "实体类型",
+				"attribute_def": "属性定义",
+				"entity_attribute_value": "实体属性值"
 			}
 		},
 		"docs": "文档",

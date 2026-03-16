@@ -1,14 +1,9 @@
 import { faker } from "@faker-js/faker";
 
-import {
-	type DndDataType,
-	type TaskComment,
-	TaskPriority,
-	TaskTag,
-} from "./types";
+import { type DndDataType, type TaskComment, TaskPriority, TaskTag } from "./types";
 
 const fakeComment = (count: number): TaskComment[] => {
-	const result = [];
+	const result: TaskComment[] = [];
 	for (let index = 0; index < count; index += 1) {
 		result.push({
 			username: faker.person.fullName(),
@@ -21,7 +16,7 @@ const fakeComment = (count: number): TaskComment[] => {
 };
 
 const fakeAttachment = (count: number) => {
-	const result = [];
+	const result: string[] = [];
 	for (let index = 0; index < count; index += 1) {
 		result.push(faker.image.urlPicsumPhotos());
 	}
@@ -29,7 +24,7 @@ const fakeAttachment = (count: number) => {
 };
 
 const fakeAssignee = (count: number) => {
-	const result = [];
+	const result: string[] = [];
 	for (let index = 0; index < count; index += 1) {
 		result.push(faker.image.avatarGitHub());
 	}
@@ -37,11 +32,11 @@ const fakeAssignee = (count: number) => {
 };
 
 const fakeTag = (count: number) => {
-	const uniqueArray = [];
-	const set = new Set();
+	const uniqueArray: TaskTag[] = [];
+	const set: Set<TaskTag> = new Set();
 
 	while (uniqueArray.length < count) {
-		const randomElement = faker.helpers.enumValue(TaskTag);
+		const randomElement: TaskTag = faker.helpers.enumValue(TaskTag);
 		if (!set.has(randomElement)) {
 			uniqueArray.push(randomElement);
 			set.add(randomElement);

@@ -131,4 +131,19 @@ export const frontendDashboardRoutes: RouteObjectWithMeta[] = [
 			},
 		],
 	},
+	/** EAV管理页面 */
+	{
+		path: "eav",
+		children: [
+			{ index: true, element: <Navigate to="entity-type" replace /> },
+			{ path: "entity-type", element: Component("/pages/eav/entity-type") },
+			{ path: "attribute-def", element: Component("/pages/eav/attribute-def") },
+			{ path: "entity-attribute-binding", element: Component("/pages/eav/entity-attribute-binding") },
+			{ path: "entity-attribute-value", element: Component("/pages/eav/entity-attribute-value") },
+		],
+	},
+	{
+		path: "demo",
+		element: Component("/pages/demo/index"),
+	},
 ];

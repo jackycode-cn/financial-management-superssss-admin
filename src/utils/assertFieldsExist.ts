@@ -15,12 +15,12 @@ export function assertFieldsExist<T extends object, K extends keyof T>(
 ): asserts obj is RequiredFields<T, K> {
 	for (const key of keys) {
 		if (!Object.prototype.hasOwnProperty.call(obj, key)) {
-			throw new Error(`字段 ${String(key)} 是必填项`);
+			throw new Error(`字段 ${String(key)} 是必填的`);
 		}
 
 		const value = obj[key];
 		if (value === null || value === undefined) {
-			throw new Error(`字段 ${String(key)} 不能为空`);
+			throw new Error(`字段 ${String(key)} 不能為空`);
 		}
 	}
 }

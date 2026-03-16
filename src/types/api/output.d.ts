@@ -1992,3 +1992,570 @@ export interface UpdateAdPositionDto {
 	 */
 	updatedAt?: Record<string, any>;
 }
+
+export interface AttributeDefWithOutEntityType {
+	/**
+	 * 验证规则
+	 */
+	validationRules?: Record<string, any> | null;
+	/**
+	 * 选项
+	 */
+	options?: Record<string, any> | null;
+	/**
+	 * 样式配置
+	 */
+	styleConfig?: Record<string, any> | null;
+	/**
+	 * 属性定义ID
+	 */
+	id: string;
+	/**
+	 * 实体类型ID
+	 */
+	entityTypeId: string | null;
+	/**
+	 * 属性名称
+	 */
+	attrName: string | null;
+	/**
+	 * 属性代码
+	 */
+	attrCode: string | null;
+	/**
+	 * 属性类型
+	 */
+	attrType: Record<string, any>;
+
+	defaultValue: string | null;
+	/**
+	 * 占位符
+	 */
+	placeholder: string | null;
+	/**
+	 * 分组名称
+	 */
+	groupName: string | null;
+	/**
+	 * 排序顺序
+	 */
+	sortOrder: number | null;
+	/**
+	 * 是否必填
+	 */
+	isRequired: number | null;
+	/**
+	 * 状态
+	 */
+	status: number | null;
+	/**
+	 * 创建人
+	 */
+	creator: string | null;
+	/**
+	 * 编辑人
+	 */
+	editor: string | null;
+	/**
+	 * 创建时间
+	 */
+	createdAt: string | null;
+	/**
+	 * 更新时间
+	 */
+	updatedAt: string | null;
+}
+
+export interface EntityAttributeValueBase {
+	id: string;
+
+	entityTypeId: string | null;
+
+	entityId: string | null;
+
+	attrDefId: string | null;
+
+	attrValue: string | null;
+
+	attrValueJson: Record<string, any> | null;
+
+	overrideConfig: Record<string, any> | null;
+
+	createdAt: string | null;
+
+	updatedAt: string | null;
+}
+
+export interface EntityType {
+	/**
+	 * 属性定义列表
+	 */
+	attributeDefs?: AttributeDefWithOutEntityType[];
+	/**
+	 * 属性值列表
+	 */
+	entityValues?: EntityAttributeValueBase[];
+
+	id: string;
+
+	typeName: string | null;
+
+	typeCode: string | null;
+
+	description: string | null;
+
+	status: number | null;
+
+	createdAt: string | null;
+
+	updatedAt: string | null;
+}
+
+export interface CreateEntityTypeDto {
+	/**
+	 * 實體類型名稱
+	 * 示例: "廣告"
+	 */
+	typeName: string;
+	/**
+	 * 實體類型代碼
+	 * 示例: "ad"
+	 */
+	typeCode: string;
+	/**
+	 * 描述
+	 * 示例: "廣告實體類型"
+	 */
+	description?: string;
+	/**
+	 * 狀態：0禁用 1啟用
+	 * 示例: 1
+	 */
+	status?: number;
+}
+
+export interface UpdateEntityTypeDto {
+	/**
+	 * 實體類型名稱
+	 * 示例: "廣告"
+	 */
+	typeName?: string;
+	/**
+	 * 實體類型代碼
+	 * 示例: "ad"
+	 */
+	typeCode?: string;
+	/**
+	 * 描述
+	 * 示例: "廣告實體類型"
+	 */
+	description?: string;
+	/**
+	 * 狀態：0禁用 1啟用
+	 * 示例: 1
+	 */
+	status?: number;
+}
+
+export interface AttributeDef {
+	/**
+	 * 验证规则
+	 */
+	validationRules?: Record<string, any> | null;
+	/**
+	 * 选项
+	 */
+	options?: Record<string, any> | null;
+	/**
+	 * 样式配置
+	 */
+	styleConfig?: Record<string, any> | null;
+	/**
+	 * 所属实体类型
+	 */
+	entityType?: any;
+	/**
+	 * 属性定义ID
+	 */
+	id: string;
+	/**
+	 * 实体类型ID
+	 */
+	entityTypeId: string | null;
+	/**
+	 * 属性名称
+	 */
+	attrName: string | null;
+	/**
+	 * 属性代码
+	 */
+	attrCode: string | null;
+	/**
+	 * 属性类型
+	 */
+	attrType: Record<string, any>;
+
+	defaultValue: string | null;
+	/**
+	 * 占位符
+	 */
+	placeholder: string | null;
+	/**
+	 * 分组名称
+	 */
+	groupName: string | null;
+	/**
+	 * 排序顺序
+	 */
+	sortOrder: number | null;
+	/**
+	 * 是否必填
+	 */
+	isRequired: number | null;
+	/**
+	 * 状态
+	 */
+	status: number | null;
+	/**
+	 * 创建人
+	 */
+	creator: string | null;
+	/**
+	 * 编辑人
+	 */
+	editor: string | null;
+	/**
+	 * 创建时间
+	 */
+	createdAt: string | null;
+	/**
+	 * 更新时间
+	 */
+	updatedAt: string | null;
+}
+
+export interface CreateAttributeDefDto {
+	/**
+	 * 所屬實體類型ID
+	 * 示例: "clj1234567890"
+	 */
+	entityTypeId: string;
+	/**
+	 * 屬性名稱
+	 * 示例: "廣告標題"
+	 */
+	attrName: string;
+	/**
+	 * 屬性代碼
+	 * 示例: "adTitle"
+	 */
+	attrCode: string;
+	/**
+	 * 屬性類型
+	 * 示例: "text"
+	 */
+	attrType:
+		| "text"
+		| "textarea"
+		| "image"
+		| "link"
+		| "button"
+		| "tag"
+		| "price"
+		| "rating"
+		| "number"
+		| "date"
+		| "color"
+		| "select"
+		| "switch";
+	/**
+	 * 默認值
+	 * 示例: "默認標題"
+	 */
+	defaultValue?: string;
+	/**
+	 * 佔位符
+	 * 示例: "請輸入標題"
+	 */
+	placeholder?: string;
+	/**
+	 * 驗證規則
+	 * 示例: "{\"required\": true}"
+	 */
+	validationRules?: Record<string, any>;
+	/**
+	 * 選項配置
+	 * 示例: "{\"options\": [{\"label\": \"選項1\", \"value\": \"1\"}]}"
+	 */
+	options?: Record<string, any>;
+	/**
+	 * 樣式配置
+	 * 示例: "{\"width\": \"100%\"}"
+	 */
+	styleConfig?: Record<string, any>;
+	/**
+	 * 分組名稱
+	 * 示例: "基本信息"
+	 */
+	groupName?: string;
+	/**
+	 * 排序
+	 * 示例: 0
+	 */
+	sortOrder?: number;
+	/**
+	 * 是否必填：0否 1是
+	 * 示例: 0
+	 */
+	isRequired?: number;
+	/**
+	 * 狀態：0禁用 1啟用
+	 * 示例: 1
+	 */
+	status?: number;
+	/**
+	 * 創建者
+	 * 示例: "admin"
+	 */
+	creator?: string;
+	/**
+	 * 編輯者
+	 * 示例: "admin"
+	 */
+	editor?: string;
+}
+
+export interface UpdateAttributeDefDto {
+	/**
+	 * 所屬實體類型ID
+	 * 示例: "clj1234567890"
+	 */
+	entityTypeId?: string;
+	/**
+	 * 屬性名稱
+	 * 示例: "廣告標題"
+	 */
+	attrName?: string;
+	/**
+	 * 屬性代碼
+	 * 示例: "adTitle"
+	 */
+	attrCode?: string;
+	/**
+	 * 屬性類型
+	 * 示例: "text"
+	 */
+	attrType?:
+		| "text"
+		| "textarea"
+		| "image"
+		| "link"
+		| "button"
+		| "tag"
+		| "price"
+		| "rating"
+		| "number"
+		| "date"
+		| "color"
+		| "select"
+		| "switch";
+	/**
+	 * 默認值
+	 * 示例: "默認標題"
+	 */
+	defaultValue?: string;
+	/**
+	 * 佔位符
+	 * 示例: "請輸入標題"
+	 */
+	placeholder?: string;
+	/**
+	 * 驗證規則
+	 * 示例: "{\"required\": true}"
+	 */
+	validationRules?: Record<string, any>;
+	/**
+	 * 選項配置
+	 * 示例: "{\"options\": [{\"label\": \"選項1\", \"value\": \"1\"}]}"
+	 */
+	options?: Record<string, any>;
+	/**
+	 * 樣式配置
+	 * 示例: "{\"width\": \"100%\"}"
+	 */
+	styleConfig?: Record<string, any>;
+	/**
+	 * 分組名稱
+	 * 示例: "基本信息"
+	 */
+	groupName?: string;
+	/**
+	 * 排序
+	 * 示例: 0
+	 */
+	sortOrder?: number;
+	/**
+	 * 是否必填：0否 1是
+	 * 示例: 0
+	 */
+	isRequired?: number;
+	/**
+	 * 狀態：0禁用 1啟用
+	 * 示例: 1
+	 */
+	status?: number;
+	/**
+	 * 創建者
+	 * 示例: "admin"
+	 */
+	creator?: string;
+	/**
+	 * 編輯者
+	 * 示例: "admin"
+	 */
+	editor?: string;
+}
+
+export interface EntityAttributeValue {
+	/**
+	 * 属性值JSON
+	 */
+	attrValueJson?: Record<string, any> | null;
+	/**
+	 * 覆盖配置
+	 */
+	overrideConfig?: Record<string, any> | null;
+	/**
+	 * 实体类型
+	 */
+	entityType?: any;
+	/**
+	 * 属性定义
+	 */
+	attributeDef?: any;
+
+	id: string;
+	/**
+	 * 实体类型ID
+	 */
+	entityTypeId: string | null;
+	/**
+	 * 实体ID
+	 */
+	entityId: string | null;
+	/**
+	 * 属性定义ID
+	 */
+	attrDefId: string | null;
+	/**
+	 * 属性值 简单值
+	 */
+	attrValue: string | null;
+
+	createdAt: string | null;
+
+	updatedAt: string | null;
+}
+
+export interface CreateEntityAttributeValueDto {
+	/**
+	 * 實體類型ID
+	 * 示例: "clj1234567890"
+	 */
+	entityTypeId: string;
+	/**
+	 * 實體ID
+	 * 示例: "ad1234567890"
+	 */
+	entityId: string;
+	/**
+	 * 屬性定義ID
+	 * 示例: "attr1234567890"
+	 */
+	attrDefId: string;
+	/**
+	 * 簡單屬性值
+	 * 示例: "屬性值"
+	 */
+	attrValue?: string;
+	/**
+	 * JSON格式的屬性值
+	 * 示例: "{\"key\": \"value\"}"
+	 */
+	attrValueJson?: Record<string, any>;
+	/**
+	 * 覆蓋配置
+	 * 示例: "{\"style\": \"custom\"}"
+	 */
+	overrideConfig?: Record<string, any>;
+}
+
+export interface OmitTypeClass {
+	/**
+	 * 属性值JSON
+	 */
+	attrValueJson?: Record<string, any> | null;
+	/**
+	 * 覆盖配置
+	 */
+	overrideConfig?: Record<string, any> | null;
+	/**
+	 * 属性定义
+	 */
+	attributeDef?: any;
+
+	id: string;
+	/**
+	 * 实体类型ID
+	 */
+	entityTypeId: string | null;
+	/**
+	 * 实体ID
+	 */
+	entityId: string | null;
+	/**
+	 * 属性定义ID
+	 */
+	attrDefId: string | null;
+	/**
+	 * 属性值 简单值
+	 */
+	attrValue: string | null;
+
+	createdAt: string | null;
+
+	updatedAt: string | null;
+}
+
+export interface UpdateEntityAttributeValueDto {
+	/**
+	 * 實體類型ID
+	 * 示例: "clj1234567890"
+	 */
+	entityTypeId?: string;
+	/**
+	 * 實體ID
+	 * 示例: "ad1234567890"
+	 */
+	entityId?: string;
+	/**
+	 * 屬性定義ID
+	 * 示例: "attr1234567890"
+	 */
+	attrDefId?: string;
+	/**
+	 * 簡單屬性值
+	 * 示例: "屬性值"
+	 */
+	attrValue?: string;
+	/**
+	 * JSON格式的屬性值
+	 * 示例: "{\"key\": \"value\"}"
+	 */
+	attrValueJson?: Record<string, any>;
+	/**
+	 * 覆蓋配置
+	 * 示例: "{\"style\": \"custom\"}"
+	 */
+	overrideConfig?: Record<string, any>;
+}

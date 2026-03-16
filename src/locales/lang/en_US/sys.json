@@ -96,6 +96,12 @@
 				"position": "Ads Position",
 				"admin": "Ads Admin"
 			},
+			"eav": {
+				"index": "EAV Management",
+				"entity_type": "Entity Type",
+				"attribute_def": "Attribute Definition",
+				"entity_attribute_value": "Entity Attribute Value"
+			},
 			"external_link": "External Link",
 			"link": "Item External",
 			"functions": "Functions",
