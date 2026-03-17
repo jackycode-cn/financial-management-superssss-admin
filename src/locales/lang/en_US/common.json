@@ -65,5 +65,15 @@
 			"serif": "Serif",
 			"monospace": "Monospace"
 		}
+	},
+	"action": {
+		"view": "View",
+		"edit": "Edit",
+		"add": "Add",
+		"delete": "Delete"
+	},
+	"tip": {
+		"delete": "Are you sure you want to delete this item?",
+		"no_image": "No image"
 	}
 }

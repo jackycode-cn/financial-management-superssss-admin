@@ -3,6 +3,7 @@ import { useEntityAttributeValues } from "@/hooks/useEntityAttributeValues";
 import { Button, Form, Input, Popconfirm, Select, message } from "antd";
 import { DeleteIcon, SaveIcon } from "lucide-react";
 import { type FC, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 interface EntityAttributeValuesProps {
 	/**
@@ -31,11 +32,11 @@ const EntityAttributeValues: FC<EntityAttributeValuesProps> = ({
 	entityTypeId,
 	entityId,
 	entityTypeCode = "advertisement",
-	title = "属性值管理",
+	title = "屬性值管理",
 	disabled = false,
 }) => {
 	const [form] = Form.useForm();
-
+	const { t } = useTranslation();
 	// 使用自定义Hook获取所有业务逻辑
 	const {
 		attributeDefs,
@@ -71,7 +72,7 @@ const EntityAttributeValues: FC<EntityAttributeValuesProps> = ({
 	// 处理表单提交
 	const handleSubmit = () => {
 		if (!entityId) {
-			message.error("请先创建实体");
+			message.error("請先創建實體");
 			return;
 		}
 
@@ -79,11 +80,11 @@ const EntityAttributeValues: FC<EntityAttributeValuesProps> = ({
 			// 使用实体类型ID或代码
 			const entityTypeIdentifier = entityTypeCode || entityTypeId;
 			if (!entityTypeIdentifier) {
-				message.error("请提供实体类型");
+				message.error("請提供實體類型");
 				return;
 			}
 
-			// 构建批量更新的数据
+			// 構建批量更新的數據
 			const valuesToSave = Object.entries(values).map(([attrDefId, attrValue]) => ({
 				attrDefId,
 				attrValue: attrValue as string,
@@ -115,13 +116,13 @@ const EntityAttributeValues: FC<EntityAttributeValuesProps> = ({
 							validationRules
 								? Object.entries(validationRules).map(([key, value]) => ({
 										[key]: value,
-										message: `请输入有效的${attrName}`,
+										message: `請選擇有效的${attrName}`,
 									}))
 								: []
 						}
 					>
 						<Select
-							placeholder={placeholder || `请选择${attrName}`}
+							placeholder={placeholder || `請選擇${attrName}`}
 							disabled={disabled}
 							options={attrType?.options || []}
 						/>
@@ -137,12 +138,12 @@ const EntityAttributeValues: FC<EntityAttributeValuesProps> = ({
 							validationRules
 								? Object.entries(validationRules).map(([key, value]) => ({
 										[key]: value,
-										message: `请输入有效的${attrName}`,
+										message: `請輸入有效的${attrName}`,
 									}))
 								: []
 						}
 					>
-						<Input.TextArea placeholder={placeholder || `请输入${attrName}`} disabled={disabled} rows={4} />
+						<Input.TextArea placeholder={placeholder || `請輸入${attrName}`} disabled={disabled} rows={4} />
 					</Form.Item>
 				);
 			default:
@@ -155,12 +156,12 @@ const EntityAttributeValues: FC<EntityAttributeValuesProps> = ({
 							validationRules
 								? Object.entries(validationRules).map(([key, value]) => ({
 										[key]: value,
-										message: `请输入有效的${attrName}`,
+										message: `請輸入有效的${attrName}`,
 									}))
 								: []
 						}
 					>
-						<Input placeholder={placeholder || `请输入${attrName}`} disabled={disabled} />
+						<Input placeholder={placeholder || `請輸入${attrName}`} disabled={disabled} />
 					</Form.Item>
 				);
 		}
@@ -172,22 +173,22 @@ const EntityAttributeValues: FC<EntityAttributeValuesProps> = ({
 				<h3 className="text-lg font-semibold">{title}</h3>
 				{!disabled && entityId && (
 					<Button type="primary" icon={<SaveIcon />} onClick={handleSubmit} loading={isBulkUpdating}>
-						保存属性值
+						保存屬性值
 					</Button>
 				)}
 			</div>
 
 			{!entityId && (
 				<div className="p-4 bg-gray-50 rounded-lg mb-4">
-					<p className="text-gray-600">实体尚未创建，请先创建实体以管理属性值。</p>
+					<p className="text-gray-600">實體尚未創建，請先創建實體以管理屬性值。</p>
 				</div>
 			)}
 
 			<Form form={form} layout="vertical">
 				{attributeDefsLoading ? (
-					<div className="text-center py-4">加载属性定义中...</div>
+					<div className="text-center py-4">加載屬性定義中...</div>
 				) : attributeDefs?.length === 0 ? (
-					<div className="text-center py-4 text-gray-500">该实体类型暂无属性定义</div>
+					<div className="text-center py-4 text-gray-500">該實體類型暂无屬性定義</div>
 				) : attributeDefs ? (
 					attributeDefs.map(renderAttributeInput)
 				) : (
@@ -197,21 +198,16 @@ const EntityAttributeValues: FC<EntityAttributeValuesProps> = ({
 
 			{entityId && entityValues && entityValues.length > 0 && (
 				<div className="mt-6">
-					<h4 className="text-sm font-medium mb-2">现有属性值</h4>
+					<h4 className="text-sm font-medium mb-2">現有屬性</h4>
 					<div className="space-y-2">
 						{entityValues.map((value) => (
 							<div key={value.id} className="flex justify-between items-center p-2 border rounded">
 								<div>
-									<div className="font-medium">{value.attributeDef?.attrName || "未知属性"}</div>
+									<div className="font-medium">{value.attributeDef?.attrName || "未知屬性"}</div>
 									<div className="text-sm text-gray-600">{value.attrValue || "空值"}</div>
 								</div>
 								{!disabled && (
-									<Popconfirm
-										title="确定要删除吗？"
-										onConfirm={() => handleDelete(value.id)}
-										okText="确定"
-										cancelText="取消"
-									>
+									<Popconfirm title={t("tip.delete")} onConfirm={() => handleDelete(value.id)}>
 										<Button danger icon={<DeleteIcon />} size="small" />
 									</Popconfirm>
 								)}

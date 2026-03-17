@@ -1,6 +1,7 @@
 import type { AdPositionResponseDto, Advertisement } from "#/api";
-import { Image, Space, Tag, Typography } from "antd";
+import { Image, Popconfirm, Space, Tag, Typography } from "antd";
 import type { ColumnType } from "antd/es/table";
+import { t } from "i18next";
 import { LucideDelete, LucideEdit, LucideEye, PlusIcon } from "lucide-react";
 
 const { Text } = Typography;
@@ -51,7 +52,7 @@ export const getTableColumns = ({
 				/>
 			) : (
 				<div className="bg-gray-100 border-2 border-dashed rounded-xl w-12 h-10 flex items-center justify-center">
-					<span className="text-xs text-gray-400">無圖</span>
+					<span className="text-xs text-gray-400">{t("tip.no_image")}</span>
 				</div>
 			),
 	},
@@ -154,9 +155,6 @@ export const getTableColumns = ({
 				<button type="button" className="text-blue-600 hover:text-blue-800 p-1" onClick={() => handleEdit(record)}>
 					<LucideEdit size={16} />
 				</button>
-				<button type="button" className="text-red-600 hover:text-red-800 p-1" onClick={() => handleDelete(record.id)}>
-					<LucideDelete size={16} />
-				</button>
 				<button
 					type="button"
 					className="text-green-600 hover:text-green-800 p-1"
@@ -164,6 +162,11 @@ export const getTableColumns = ({
 				>
 					<PlusIcon size={16} />
 				</button>
+				<Popconfirm title={t("tip.delete")} onConfirm={() => handleDelete(record.id)}>
+					<button type="button" className="text-red-600 hover:text-red-800 p-1">
+						<LucideDelete size={16} />
+					</button>
+				</Popconfirm>
 			</Space>
 		),
 	},

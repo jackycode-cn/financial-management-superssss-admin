@@ -65,5 +65,15 @@
 			"serif": "衬線字體",
 			"monospace": "等寬字體"
 		}
+	},
+	"action": {
+		"view": "查看",
+		"edit": "編輯",
+		"add": "添加",
+		"delete": "刪除"
+	},
+	"tip": {
+		"delete": "確認刪除嗎？",
+		"no_image": "無圖片"
 	}
 }
