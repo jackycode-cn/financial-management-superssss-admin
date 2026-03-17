@@ -6,7 +6,7 @@ import type { UploadImageFileEntity } from "#/api";
 *单文件上传(当使用数字魔法验证的时候，不能设置dest缓存目录，必须使用内存)
 https://github.com/nestjs/nest/issues/14970
 */
-export async function reqFileuploadfile(file: File): Promise<UploadImageFileEntity> {
+export async function reqFileuploadfile(file: File | Blob): Promise<UploadImageFileEntity> {
 	return await apiClient.post("/api/file/upload/image", undefined, {
 		headers: {
 			"Content-Type": "multipart/form-data",

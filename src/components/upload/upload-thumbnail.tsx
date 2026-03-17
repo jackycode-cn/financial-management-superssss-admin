@@ -36,6 +36,11 @@ export function UploadThumbnail({
 	) => {
 		if (info.file.status === "uploading") return;
 		if (info.file.status === "done") {
+			if (info.file.response && typeof info.file.response === "string") {
+				setImageUrl(info.file.response);
+				onSuccess?.(info.file.response);
+				return;
+			}
 			const { data } = info.file.response as CustomResponse<UploadImageFileEntity>;
 			if (data) {
 				setImageUrl(data?.tempAccessUrl || data.accessUrl || "");

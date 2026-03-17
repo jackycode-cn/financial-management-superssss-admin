@@ -1,6 +1,5 @@
+import { customRequest } from "@/components/upload/custom-request";
 import { UploadThumbnail } from "@/components/upload/upload-thumbnail";
-import { GLOBAL_CONFIG } from "@/global-config";
-import { useUserToken } from "@/store/userStore";
 import { Radio } from "antd";
 import { useEffect, useState } from "react";
 
@@ -11,10 +10,9 @@ interface Props {
 	defaultMode?: "url" | "upload";
 }
 
-export function UploadThumbnailWithMode({ value, onChange, disabled, defaultMode = "url" }: Props) {
+export function UploadThumbnailWithMode({ value, onChange, disabled, defaultMode = "upload" }: Props) {
 	const [mode, setMode] = useState<"url" | "upload">(defaultMode);
 	const [thumbnail, setThumbnail] = useState(value);
-	const accessToken = useUserToken().accessToken;
 	const handleModeChange = (e: any) => {
 		setMode(e.target.value);
 		if (e.target.value === "url") {
@@ -26,6 +24,7 @@ export function UploadThumbnailWithMode({ value, onChange, disabled, defaultMode
 		setThumbnail(url);
 		onChange?.(url);
 	};
+
 	useEffect(() => {
 		setThumbnail(value);
 	}, [value]);
@@ -52,10 +51,7 @@ export function UploadThumbnailWithMode({ value, onChange, disabled, defaultMode
 
 			{mode === "upload" && (
 				<UploadThumbnail
-					action={GLOBAL_CONFIG.uploadFileUrl}
-					headers={{
-						Authorization: `Bearer ${accessToken}`,
-					}}
+					customRequest={customRequest}
 					defaultUrl={value}
 					name="file"
 					className="w-full"
