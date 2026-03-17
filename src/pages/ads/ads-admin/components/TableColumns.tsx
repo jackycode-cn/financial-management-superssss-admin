@@ -1,7 +1,7 @@
 import type { AdPositionResponseDto, Advertisement } from "#/api";
 import { Image, Space, Tag, Typography } from "antd";
 import type { ColumnType } from "antd/es/table";
-import { LucideDelete, LucideEdit, LucideEye } from "lucide-react";
+import { LucideDelete, LucideEdit, LucideEye, PlusIcon } from "lucide-react";
 
 const { Text } = Typography;
 
@@ -9,12 +9,14 @@ interface TableColumnsProps {
 	handleView: (record: Advertisement) => void;
 	handleEdit: (record: Advertisement) => void;
 	handleDelete: (id?: string) => void;
+	handleAddExtraAttribute: (record: Advertisement) => void;
 }
 
 export const getTableColumns = ({
 	handleView,
 	handleEdit,
 	handleDelete,
+	handleAddExtraAttribute,
 }: TableColumnsProps): ColumnType<Advertisement>[] => [
 	{
 		title: "ID",
@@ -154,6 +156,13 @@ export const getTableColumns = ({
 				</button>
 				<button type="button" className="text-red-600 hover:text-red-800 p-1" onClick={() => handleDelete(record.id)}>
 					<LucideDelete size={16} />
+				</button>
+				<button
+					type="button"
+					className="text-green-600 hover:text-green-800 p-1"
+					onClick={() => handleAddExtraAttribute(record)}
+				>
+					<PlusIcon size={16} />
 				</button>
 			</Space>
 		),

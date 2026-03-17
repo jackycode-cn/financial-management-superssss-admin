@@ -120,8 +120,16 @@ export async function reqEavcreateentityattributevalue(
 /**
  *批量創建或更新實體屬性值
  */
-export async function reqEavbulkcreateorupdate(): Promise<EntityAttributeValue[]> {
-	return await apiClient.post("/api/eav/entity-attribute-values/bulk");
+export async function reqEavbulkcreateorupdate(data: {
+	entityTypeId: string;
+	entityId: string;
+	values: Array<{
+		attrDefId: string;
+		attrValue?: string;
+		attrValueJson?: any;
+	}>;
+}): Promise<EntityAttributeValue[]> {
+	return await apiClient.post("/api/eav/entity-attribute-values/bulk", data);
 }
 
 /**

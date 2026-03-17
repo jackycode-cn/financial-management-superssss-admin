@@ -84,7 +84,6 @@ const EntityAttributeDemoPage: FC = () => {
 				<EntityAttributeValues
 					entityId={null} // 未提供实体ID
 					entityTypeCode="advertisement"
-					onEntityCreated={handleEntityCreated}
 					title="预设置属性值"
 				/>
 

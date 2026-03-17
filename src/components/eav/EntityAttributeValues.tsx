@@ -1,15 +1,8 @@
-import type { AttributeDef, CreateEntityAttributeValueDto, UpdateEntityAttributeValueDto } from "#/api";
-import {
-	reqEavcreateentityattributevalue,
-	reqEavfindbyentity,
-	reqEavfindbyentitytypeid,
-	reqEavremoveentityattributevalue,
-	reqEavupdateentityattributevalue,
-} from "@/api/services/EAV";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import type { AttributeDef } from "#/api";
+import { useEntityAttributeValues } from "@/hooks/useEntityAttributeValues";
 import { Button, Form, Input, Popconfirm, Select, message } from "antd";
 import { DeleteIcon, SaveIcon } from "lucide-react";
-import { type FC, useEffect, useState } from "react";
+import { type FC, useEffect } from "react";
 
 interface EntityAttributeValuesProps {
 	/**
@@ -21,13 +14,9 @@ interface EntityAttributeValuesProps {
 	 */
 	entityTypeCode?: string;
 	/**
-	 * 实体ID（可选，若未提供则通过onEntityCreated回调获取）
+	 * 实体ID
 	 */
 	entityId?: string | null;
-	/**
-	 * 实体创建完成后的回调函数，用于获取实体ID
-	 */
-	onEntityCreated?: (entityId: string) => void;
 	/**
 	 * 组件标题
 	 */
@@ -40,114 +29,44 @@ interface EntityAttributeValuesProps {
 
 const EntityAttributeValues: FC<EntityAttributeValuesProps> = ({
 	entityTypeId,
-	entityId: externalEntityId,
-	onEntityCreated,
+	entityId,
+	entityTypeCode = "advertisement",
 	title = "属性值管理",
 	disabled = false,
-	entityTypeCode = "advertisement",
 }) => {
 	const [form] = Form.useForm();
-	const [entityId, setEntityId] = useState<string | null>(externalEntityId || null);
-	const [attributeValues, setAttributeValues] = useState<Map<string, string>>(new Map());
-	const queryClient = useQueryClient();
 
-	// 查询属性定义列表
+	// 使用自定义Hook获取所有业务逻辑
 	const {
-		data: attributeDefs,
-		isLoading: attributeDefsLoading,
-		refetch: refetchAttributeDefs,
-	} = useQuery({
-		queryKey: ["attributeDefs", entityTypeCode || entityTypeId],
-		queryFn: () => {
-			const keyword = entityTypeCode || entityTypeId;
-			if (!keyword) {
-				return Promise.resolve([]);
-			}
-			const type = entityTypeCode ? "entityTypeCode" : "entityTypeId";
-			return reqEavfindbyentitytypeid(keyword, type);
-		},
-		enabled: !!entityTypeCode || !!entityTypeId,
-	});
-
-	// 查询实体属性值
-	const {
-		data: entityValues,
-		isLoading: entityValuesLoading,
-		refetch: refetchEntityValues,
-	} = useQuery({
-		queryKey: ["entityAttributeValues", entityTypeCode || entityTypeId, entityId],
-		queryFn: () => {
-			if (!entityId) {
-				return Promise.resolve([]);
-			}
-			// 使用实体类型ID或代码查询属性值
-			const entityTypeIdentifier = entityTypeCode || entityTypeId;
-			return reqEavfindbyentity({
-				entityTypeId: entityTypeIdentifier,
-				entityId,
-			});
-		},
-		enabled: (!!entityTypeCode || !!entityTypeId) && !!entityId,
+		attributeDefs,
+		attributeDefsLoading,
+		entityValues,
+		entityValuesLoading,
+		refetchEntityValues,
+		deleteValue,
+		bulkUpdateValues,
+		isDeleting,
+		isBulkUpdating,
+	} = useEntityAttributeValues({
+		entityTypeId,
+		entityId,
+		entityTypeCode,
+		disabled,
 	});
 
 	// 当实体值加载完成时，更新表单值
 	useEffect(() => {
 		if (entityValues && entityValues.length > 0) {
-			const valuesMap = new Map<string, string>();
+			const valuesMap: Record<string, string> = {};
 			// biome-ignore lint/complexity/noForEach: <explanation>
 			entityValues.forEach((value) => {
 				if (value.attrDefId) {
-					valuesMap.set(value.attrDefId, value.attrValue || "");
+					valuesMap[value.attrDefId] = value.attrValue || "";
 				}
 			});
-			setAttributeValues(valuesMap);
-			form.setFieldsValue(Object.fromEntries(valuesMap.entries()));
+			form.setFieldsValue(valuesMap);
 		}
 	}, [entityValues, form]);
-
-	// 当外部实体ID变化时，更新内部状态
-	useEffect(() => {
-		if (externalEntityId !== entityId) {
-			setEntityId(externalEntityId || null);
-		}
-	}, [externalEntityId, entityId]);
-
-	// 创建属性值
-	const createMutation = useMutation({
-		mutationFn: (data: CreateEntityAttributeValueDto) => reqEavcreateentityattributevalue(data),
-		onSuccess: () => {
-			message.success("属性值创建成功");
-			refetchEntityValues();
-		},
-		onError: (error: any) => {
-			message.error(`创建失败: ${error.message}`);
-		},
-	});
-
-	// 更新属性值
-	const updateMutation = useMutation({
-		mutationFn: ({ id, data }: { id: string; data: UpdateEntityAttributeValueDto }) =>
-			reqEavupdateentityattributevalue(id, data),
-		onSuccess: () => {
-			message.success("属性值更新成功");
-			refetchEntityValues();
-		},
-		onError: (error: any) => {
-			message.error(`更新失败: ${error.message}`);
-		},
-	});
-
-	// 删除属性值
-	const deleteMutation = useMutation({
-		mutationFn: (id: string) => reqEavremoveentityattributevalue(id),
-		onSuccess: () => {
-			message.success("属性值删除成功");
-			refetchEntityValues();
-		},
-		onError: (error: any) => {
-			message.error(`删除失败: ${error.message}`);
-		},
-	});
 
 	// 处理表单提交
 	const handleSubmit = () => {
@@ -156,54 +75,28 @@ const EntityAttributeValues: FC<EntityAttributeValuesProps> = ({
 			return;
 		}
 
-		form.validateFields().then(async (values) => {
-			try {
-				// 使用实体类型ID或代码
-				const entityTypeIdentifier = entityTypeCode || entityTypeId;
-				if (!entityTypeIdentifier) {
-					message.error("请提供实体类型");
-					return;
-				}
-
-				// 遍历所有属性值，进行创建或更新
-				for (const [attrDefId, attrValue] of Object.entries(values)) {
-					const existingValue = entityValues?.find((value) => value.attrDefId === attrDefId);
-
-					if (existingValue) {
-						// 更新现有值
-						await updateMutation.mutateAsync({
-							id: existingValue.id,
-							data: {
-								attrValue: attrValue as string,
-							},
-						});
-					} else {
-						// 创建新值
-						await createMutation.mutateAsync({
-							entityTypeId: entityTypeIdentifier,
-							entityId,
-							attrDefId,
-							attrValue: attrValue as string,
-						});
-					}
-				}
-
-				message.success("属性值保存成功");
-			} catch (error) {
-				message.error("保存失败");
+		form.validateFields().then((values) => {
+			// 使用实体类型ID或代码
+			const entityTypeIdentifier = entityTypeCode || entityTypeId;
+			if (!entityTypeIdentifier) {
+				message.error("请提供实体类型");
+				return;
 			}
+
+			// 构建批量更新的数据
+			const valuesToSave = Object.entries(values).map(([attrDefId, attrValue]) => ({
+				attrDefId,
+				attrValue: attrValue as string,
+			}));
+
+			// 调用批量更新接口
+			bulkUpdateValues(entityTypeIdentifier, entityId, valuesToSave);
 		});
 	};
 
 	// 处理删除属性值
 	const handleDelete = (id: string) => {
-		deleteMutation.mutate(id);
-	};
-
-	// 处理实体创建完成回调
-	const handleEntityCreated = (newEntityId: string) => {
-		setEntityId(newEntityId);
-		onEntityCreated?.(newEntityId);
+		deleteValue(id);
 	};
 
 	// 渲染属性输入组件
@@ -278,12 +171,7 @@ const EntityAttributeValues: FC<EntityAttributeValuesProps> = ({
 			<div className="flex justify-between items-center mb-4">
 				<h3 className="text-lg font-semibold">{title}</h3>
 				{!disabled && entityId && (
-					<Button
-						type="primary"
-						icon={<SaveIcon />}
-						onClick={handleSubmit}
-						loading={createMutation.isPending || updateMutation.isPending}
-					>
+					<Button type="primary" icon={<SaveIcon />} onClick={handleSubmit} loading={isBulkUpdating}>
 						保存属性值
 					</Button>
 				)}
@@ -291,7 +179,7 @@ const EntityAttributeValues: FC<EntityAttributeValuesProps> = ({
 
 			{!entityId && (
 				<div className="p-4 bg-gray-50 rounded-lg mb-4">
-					<p className="text-gray-600">实体尚未创建，属性值将在实体创建后通过回调函数绑定。</p>
+					<p className="text-gray-600">实体尚未创建，请先创建实体以管理属性值。</p>
 				</div>
 			)}
 
@@ -331,15 +219,6 @@ const EntityAttributeValues: FC<EntityAttributeValuesProps> = ({
 						))}
 					</div>
 				</div>
-			)}
-
-			{/* 暴露实体创建完成回调给父组件 */}
-			{typeof onEntityCreated === "function" && (
-				<input
-					type="hidden"
-					data-entity-created-callback="true"
-					onChange={(e) => handleEntityCreated(e.target.value)}
-				/>
 			)}
 		</div>
 	);

@@ -5,7 +5,7 @@ import {
 	reqAdvertisementupdate,
 } from "@/api/services/advertise";
 import { Button, Card, Form, Modal, Space, Table, Typography, message } from "antd";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 
 import type {
 	Advertisement,
@@ -13,6 +13,7 @@ import type {
 	Reqadvertisementfindallquery,
 	UpdateAdvertisementDto,
 } from "#/api";
+import EntityAttributeValues from "@/components/eav/EntityAttributeValues";
 import { assertFieldsExist } from "@/utils/assertFieldsExist";
 import { LucidePlus } from "lucide-react";
 import { toast } from "sonner";
@@ -47,7 +48,7 @@ const AdvertisementManagement = () => {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [editingRecord, setEditingRecord] = useState<Advertisement | null>(null);
 	const [searchForm] = Form.useForm();
-
+	const [modalExtraAttributeVisible, setModalExtraAttributeVisible] = useState(false);
 	// 加載數據
 	const loadData = useCallback(async (params: Partial<Reqadvertisementfindallquery>) => {
 		const { page = 1, pageSize = 10 } = params;
@@ -69,7 +70,6 @@ const AdvertisementManagement = () => {
 			pageSize: pagination.pageSize,
 		});
 	}, [loadData, pagination.current, pagination.pageSize]);
-
 	// 表格列配置
 	const columns = getTableColumns({
 		handleView: (record: Advertisement) => {
@@ -87,6 +87,10 @@ const AdvertisementManagement = () => {
 			}
 			// 在這裡調用處理刪除函數
 			handleDelete(id);
+		},
+		handleAddExtraAttribute: (record: Advertisement) => {
+			setEditingRecord(record);
+			setModalExtraAttributeVisible(true);
 		},
 	});
 
@@ -250,6 +254,27 @@ const AdvertisementManagement = () => {
 						}}
 						isEditing={isEditing}
 					/>
+				</Modal>
+				{/* 新增屬性值模態框 */}
+				<Modal
+					title="新增屬性值"
+					open={modalExtraAttributeVisible}
+					onCancel={() => {
+						setModalExtraAttributeVisible(false);
+						setEditingRecord(null);
+						form.resetFields();
+					}}
+					footer={null}
+					width={600}
+				>
+					<Fragment>
+						<EntityAttributeValues
+							key={editingRecord?.id}
+							entityId={editingRecord?.id}
+							entityTypeCode="advertisement"
+							title="額外廣告屬性"
+						/>
+					</Fragment>
 				</Modal>
 			</Card>
 		</div>
