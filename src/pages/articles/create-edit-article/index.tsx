@@ -68,60 +68,63 @@ const CreateArticle: React.FC<CreateArticleProps> = ({ title }) => {
 		if (isEditMode) {
 			await reqArticleupdate(articleId, data);
 			toast.success(t("articlePage.editSuccess"));
+			fetchArticleDetail();
 		} else {
 			await reqArticlecreate(data);
 			toast.success(t("articlePage.createSuccess"));
+			resetForm();
 		}
-		setFormValue(InitailFormValue);
-		setQuillFull("");
 		setShowArticle(false);
 	};
-
+	// 获取文章详情数据
+	const fetchArticleDetail = useCallback(async () => {
+		try {
+			if (!articleId) return;
+			const articleData = await reqArticlefindone(articleId);
+			setFormValue({
+				...articleData,
+				content: articleData.content || "",
+				description: articleData.description || "",
+				seo_title: articleData.seo_title || "",
+				seo_description: articleData.seo_description || "",
+				seo_keywords: articleData.seo_keywords || "",
+				thumbnail: articleData.thumbnail || "",
+				is_archive: articleData.is_archive || false,
+				is_top: articleData.is_top || false,
+				is_featured: articleData.is_featured || false,
+				is_hot: articleData.is_hot || false,
+				is_published: articleData.is_published || false,
+				is_external: articleData.is_external || false,
+				external_url: articleData.external_url || "",
+				external_author: articleData.external_author || "",
+				category_id: articleData.category_id || undefined,
+				tags: articleData.articles_tags
+					? articleData.articles_tags.map((tag) => ({
+							name: tag.name,
+							slug: tag.slug,
+						}))
+					: [],
+			});
+			editorRef.current?.setContent(articleData.content || "");
+		} catch (error) {
+			toast.error(t("articlePage.loadError"));
+			navigate("/articles");
+		}
+	}, [articleId, navigate, t]);
+	const resetForm = useCallback(() => {
+		setFormValue(InitailFormValue);
+		setQuillFull("");
+	}, []);
 	/** 获取文章分类数据 */
 	const categoryList = useArticleCategories()[0];
 
 	useEffect(() => {
 		if (isEditMode) {
-			// 获取文章详情数据
-			const fetchArticleDetail = async () => {
-				try {
-					const articleData = await reqArticlefindone(articleId);
-					setFormValue({
-						...articleData,
-						content: articleData.content || "",
-						description: articleData.description || "",
-						seo_title: articleData.seo_title || "",
-						seo_description: articleData.seo_description || "",
-						seo_keywords: articleData.seo_keywords || "",
-						thumbnail: articleData.thumbnail || "",
-						is_archive: articleData.is_archive || false,
-						is_top: articleData.is_top || false,
-						is_featured: articleData.is_featured || false,
-						is_hot: articleData.is_hot || false,
-						is_published: articleData.is_published || false,
-						is_external: articleData.is_external || false,
-						external_url: articleData.external_url || "",
-						external_author: articleData.external_author || "",
-						category_id: articleData.category_id || undefined,
-						tags: articleData.articles_tags
-							? articleData.articles_tags.map((tag) => ({
-									name: tag.name,
-									slug: tag.slug,
-								}))
-							: [],
-					});
-					editorRef.current?.setContent(articleData.content || "");
-				} catch (error) {
-					toast.error(t("articlePage.loadError"));
-					navigate("/articles");
-				}
-			};
 			fetchArticleDetail();
 		} else {
-			setFormValue(InitailFormValue);
-			editorRef.current?.setContent("");
+			resetForm();
 		}
-	}, [articleId, isEditMode, navigate, t]);
+	}, [fetchArticleDetail, isEditMode, resetForm]);
 
 	const [isShowPreview, setShowPreview] = useState(false);
 	const handleClosePreview = useCallback(() => {
