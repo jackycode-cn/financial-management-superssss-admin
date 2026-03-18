@@ -48,9 +48,13 @@ const CreateArticle: React.FC<CreateArticleProps> = ({ title }) => {
 	const [quillFull, setQuillFull] = useState("");
 	const [showArticle, setShowArticle] = useState(false);
 	const [formValue, setFormValue] = useState<CreateArticleDto>(InitailFormValue);
+
+	const getEditorContent = useCallback(() => {
+		return editorRef.current?.getContent() || "";
+	}, []);
 	const handleSubmit = () => {
 		// 从编辑器获取最新内容（确保内容最新）
-		const content = editorRef.current?.getContent() || "";
+		const content = getEditorContent();
 		const textContent = htmlToText(content);
 		if (!textContent.trim()) {
 			toast.error(t("articlePage.contentEmptyError"));
@@ -131,8 +135,10 @@ const CreateArticle: React.FC<CreateArticleProps> = ({ title }) => {
 		setShowPreview(false);
 	}, []);
 	const handleShowPreview = useCallback(() => {
+		const context = getEditorContent();
+		setQuillFull(context);
 		setShowPreview(true);
-	}, []);
+	}, [getEditorContent]);
 
 	return (
 		<Card>
